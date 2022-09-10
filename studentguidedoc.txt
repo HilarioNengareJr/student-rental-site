@@ -1,0 +1,68 @@
+studentguide.com
+
+Objective of site:
+
+-In a technologically improving environment, it would be absurd to not build a go-to website that caters for new students and acts as a gps and a map and 
+a get-to-know-the-place-guide.
+-This website focuses on aiding freshmen, say for instance:
+	-John is a new student at EUL and John so happens to be in need of a house he can rent within the school precinct. Now with the absent of studentguide.com
+	John is forced circumstantially to knock on each door and ask for possible houses. Now studentguide.com is meant to ease this difficulty for John by just a 
+	notifying him whenever a vacant house /apartment of his liking avails.
+	-John could link up with other students and see what functions or parties are scheduled for the night, day, week, month and year. 
+	-John is notified of buzzing spots and cool touristic sites!!
+-Those who are in real estate can now utilise easier ways to tenant their properties and forereach contractual agreements prior.
+-Restaurant owners can now advertise their spots too and get customer traffic.
+	
+
+Functional Requirements:
+
+1. user registration
+-The user registration page is a form with a fieldset comprised of:
+	-name and surname field
+	-email address
+	-location request(will show on their profile)
+	- password
+	-confirm password
+
+2. user login
+-The user login page is a form with a fieldset comprised of:
+	-email field
+	-password field
+	-remember me 
+
+Please Note: No login for students at all! Just go onsite and browse for info. Only login if you want to contribute.
+
+3.Landing page has 
+	- ads flagging around and stuff about the site, everywhere!
+	- a navbar with a login link and other categorical links:
+		-vacant rentals
+		-travel guide
+		-who's at my school
+		-job offers
+
+4.Vacant rentals route has:
+	-feed with vacant apartments notifications
+	-posts containing location, contact, images or video, comment section, like counts
+
+5.Travel guide route has:
+	-information on eating spots
+	-tourist attractions
+	-distance from current location
+ 	-posts have name,location, images or video,comment section, like counts
+
+6.wams:
+	-new students link up and create profiles
+	-posts have major, interests, images
+
+7.Job Offers:
+	-job posts for students with location and contact number
+	
+8.Log out link
+
+TECHNICAL REQUIREMENTS:
+	-Python Flask
+	-HTML/CSS
+	-Javascript React/. 
+
+
+
