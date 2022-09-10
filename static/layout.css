@@ -1,0 +1,12 @@
+.navbar{
+    height: 90px;
+    width: 95%;
+    margin: auto;
+    border-radius: 25px 20px;
+    background: rgba(0,0,0,0.3);
+}
+
+.navbar a{
+
+}
+
