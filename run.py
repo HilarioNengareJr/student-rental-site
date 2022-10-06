@@ -1,11 +1,9 @@
-from flask import Flask, render_template
-
-app = Flask(__name__)
+from studentguide import app, db
 
 
-@app.route('/')
-def home():
-    return render_template("home.html")
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 
 if __name__ == '__main__':

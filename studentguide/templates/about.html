@@ -1,0 +1,30 @@
+{% extends "layout.html"%}
+{%block content%}
+<style>
+    body{
+    background-color:rgb(229, 228, 226);
+    }
+    
+</style>
+<section id="services">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-8 mx-auto text-center">
+                <div class="service card-effect bounceInUp">
+                    <div class="iconbox">
+                        <i class='bx bxs-pin'></i>
+                    </div>
+                    <h1 class="mt-4 mb-2" id="about" style="font-family:sans-serif; color:grey;">
+                        ...</h1>
+                    <h5 style="text-align:left;">About This Site!</h5>
+                    <p style="text-align:left;"><small><i>This website is to aid freshmen with getting settled and
+                        finding
+                        accommodation. If this is your first time using this platform, there is no need to log into the
+                        site whatsoever, you can <a href="#">get started</a> right away! Unless if you are a house owner
+                        and wish to market your property, please <a href="{{url_for('login')}}">log in</a> to take part in that. </i></small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}
