@@ -28,14 +28,33 @@
     <link rel="icon" type="image/png" sizes="16x16"
           href="{{url_for('static', filename='img/icons/favicon-16x16.png')}}">
     <link rel="manifest" href="{{url_for('static', filename='img/icons/site.webmanifest')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upload_file.css') }}">
     <script src="https://kit.fontawesome.com/40d3bba8ee.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="{{url_for('static', filename='img/icons/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{{url_for('static', filename='img/icons/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{{url_for('static', filename='img/icons/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{url_for('static', filename='img/icons/site.webmanifest')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+    </script>
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+          rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
+
 </head>
 <body>
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg py-3 sticky-top navbar-light bg-white">
     <div class="container">
-        <a class="navbar-brand text-primary logo" href="#" style="font-size:35px;">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQc2qLybq7Ft4LJeP-l3rmWT66VedorQ1HSg&usqp=CAU" height="64px" width="64px" style="border-radius:50%;">
+        <a class="navbar-brand text-primary logo" href="{{ url_for('home') }}" style="font-family:segoe script;font-size:30px;">
+            studentrental.com
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -44,28 +63,38 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('home')}}">HOME </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">BROWSE </a>
-                </li>
-                <li><a class="nav-link" href="{{url_for('about_page')}}">HELP </a></li>
-            </ul>
+            <div class="nav-icons ms-auto">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('home')}}" style="font-size:25px;"><i
+                                class='bx bx-home-circle'></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="font-size:25px;"><i class='bx bx-compass'></i></a>
+                    </li>
+                    {% if not current_user.is_authenticated%}
+                    <li><a class="nav-link" href="{{url_for('about_page')}}" style="font-size:25px;"><i
+                            class='bx bx-help-circle'></i></a></li>
+                    {% endif %}
+                </ul>
+            </div>
             {%if current_user.is_authenticated%}
             <!--Make the icon show-->
-            <ul class="navbar-nav">
-                <li class="nav-item text-primary">
-                    <a class="nav-link nav-icons" href="{{url_for('upload_file')}}" style="font-size:20px;"><i class='bx bx-upload'></i> </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('account')}}">PROFILE </a>
-                </li>
-            </ul>
+            <div class="nav-icons">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item text-primary">
+                        <a class="nav-link" href="{{url_for('upload_file')}}" style="font-size:29px;"><i
+                                class='bx bx-cloud-upload'></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('account')}}" style="font-size:25px;"><i
+                                class='bx bx-user'></i></a>
+                    </li>
+                </ul>
+            </div>
             <a href="{{ url_for('logout')}}">
-                <button class="btn btn-primary ms-lg-3">Log Out</button>
+                <button class="btn btn-primary ms-lg-3" style="font-size:25px;"><i class='bx bx-log-out-circle'></i>
+                </button>
             </a>
             {% else %}
 
@@ -83,68 +112,16 @@
         margin:auto;
         margin-bottom:45px;
     }
+
+
+
 </style>
 
 {% block content %}
 {% endblock %}
 
 
-<footer>
-    <div class="footer-top">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-4">
-                    <img class="logopic" style="border-radius:50%;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQc2qLybq7Ft4LJeP-l3rmWT66VedorQ1HSg&usqp=CAU" alt="">
-                </div>
-                <div class="col-lg-2">
-                    <h5 class="text-white">Brand</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{url_for('about_page')}}">About</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2">
-                    <h5 class="text-white">More</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">FAQ's</a></li>
-                        <li><a href="#">Privacy & Policy</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4">
-                    <h5 class="text-white">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li>Address: Guzelyurt North Cyprus</li>
-                        <li><a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox">Email: hnengare@gmail.com</a>
-                        </li>
-                        <li><a href="#+90 533 850 2322">Phone: +90 533 850 2322</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">© 2022 copyright all rights reserved | Designed by <small class="text-primary">Hilario
-                        Nengare</small>
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <div class="social-icons">
-                        <a href="#"><i class='bx bxl-facebook'></i></a>
-                        <a href="#"><i class='bx bxl-twitter'></i></a>
-                        <a href="#"><i class='bx bxl-instagram-alt'></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"

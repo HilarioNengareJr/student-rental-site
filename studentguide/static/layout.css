@@ -3,109 +3,185 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Inter+Tight:wght@200&display=swap');
 
 :root {
-    --primary: #0d6efd;
-    --dark: #21252f;
-    --body: #888;
-    --white: #ffffff;
-    --box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+	--primary: #0d6efd;
+	--dark: #21252f;
+	--body: #888;
+	--white: #ffffff;
+	--box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
 }
 
 body {
-    font-family: 'Comfortaa', cursive;
-    line-height: 1.7;
-    color: var(--body);
-    overflow-x: hidden; /* Hide horizontal scrollbar */
+	font-family: 'Comfortaa', cursive;
+	line-height: 1.7;
+	color: var(--body);
+	overflow-x: hidden;
+	/* Hide horizontal scrollbar */
 }
 
-h1,h2,h3,h4,h5,h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 .display-4 {
-    color: var(--dark);
-    font-weight: 700;
+	color: var(--dark);
+	font-weight: 700;
 }
 
 a {
-    color: var(--dark);
-    text-decoration: none;
+	color: var(--dark);
+	text-decoration: none;
 }
-
 
 
 .nav-icons {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .nav-icons a {
-    width: 40px;
-    height: 40px;
-    border-radius: 1px solid var(--primary);
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100px;
-    margin-left: 5px;
-    margin-right:15px;
-    transition: all 0.4s ease;
-    border: 2px solid var(--primary);
+	width: 40px;
+	height: 40px;
+	border-radius: 1px dashed var(--primary);
+	color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100px;
+	margin-left: 5px;
+	margin-right: 15px;
+	transition: all 0.4s ease;
+	border: 2px solid var(--primary);
 }
 
 .nav-icons a:hover {
-    border-radius: 50px 25px;
-    font-weight: 700;
+	background: #0d6efd;
+	color: #fff !important;
 }
 
 img {
-    width: 100%;
+	width: 100%;
 }
 
 .navbar {
-    box-shadow: var(--box-shadow);
-    height:90px;
+	box-shadow: var(--box-shadow);
+	height: 90px;
 }
 
 
 .navbar .nav-link {
-    font-size: 14px;
-    font-weight: 750;
+	font-size: 14px;
+	font-weight: 750;
 }
 
 .navbar .nav-link.active {
-    color: var(--primary) !important;
+	color: var(--primary) !important;
 }
 
 .btn {
-    padding: 14px 18px;
-    border-width: 2px;
-    border-radius: 50px 0px;
+	padding: 14px 18px;
+	border-width: 2px;
+	border-radius: 50px 25px;
 }
 
-.logo{
-    font-family: 'Inter Tight', sans-serif;
-    text-shadow: rgba(0,0,0,0.1) 1px 0 10px;
+.logo {
+	font-family: 'Inter Tight', sans-serif;
 }
 
 .footer-top {
-    padding-top: 90px;
-    padding-bottom: 90px;
-    background-color: var(--dark);
+	padding-top: 90px;
+	padding-bottom: 90px;
+	background-color: var(--dark);
 }
 
 .footer-top a {
-    color: var(--body);
+	color: var(--body);
 }
 
 .footer-top a:hover {
-    color: var(--white);
+	color: var(--white);
 }
 
 .footer-bottom {
-    background-color: #242933;
+	background-color: #242933;
 }
 
 
 .subhero1 {
-    background:url('https://img.freepik.com/free-photo/red-brick-wall-pattern-texture_53876-23210.jpg?w=2000');
+	background: url('https://img.freepik.com/free-photo/red-brick-wall-pattern-texture_53876-23210.jpg?w=2000');
+	background-position: center;
+	background-size: cover;
+	background-attachment: fixed;
+	position: relative;
+	z-index: 2;
+}
+
+
+.subhero1::after {
+	content: "";
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(21, 20, 51, 0.8);
+	z-index: -1;
+}
+
+.content-section {
+	background: #ffffff;
+	box-shadow: var(--box-shadow);
+	padding: 20px;
+	border-radius: 25px;
+	display: flex;
+	justify-content: center;
+}
+
+fieldset {
+	line-height: 3;
+	color: var(--body);
+}
+
+.form-group {
+	line-height: 3;
+	color: var(--body);
+}
+
+
+/* width */
+::-webkit-scrollbar {
+	width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 8px 22px rgba(0, 0, 0, 0.1) #fff;
+	border-radius: 50px 25px;
+	border: solid 1px --dark;
+	cursor: pointer;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background-color: #0d6efd !important;
+	border-radius: 50px 0px;
+	margin: 5px;
+}
+
+.logopic {
+	width: 200px;
+	border-radius: solid 1px #fff !important;
+}
+
+placeholder {
+
+	font-size: 12px;
+}
+
+
+.hero {
+    background:url('https://ghstudents.com/wp-content/uploads/2022/06/Student-Accommodation.png');
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -113,8 +189,7 @@ img {
     z-index: 2;
 }
 
-
-.subhero1::after {
+.hero::after {
     content: "";
     width: 100%;
     height: 100%;
@@ -125,52 +200,180 @@ img {
     z-index: -1;
 }
 
-.content-section{
-  background: #ffffff;
-  box-shadow: var(--box-shadow);
-  padding:20px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
+section {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    --box-shadow: 0 8px 22px rgba(0,0,0,0.2);
 }
 
-fieldset{
-    line-height: 3;
-    color: var(--body);
+.card-effect {
+    font-size: 20px;
+    box-shadow: var(--box-shadow);
+    background-color: var(--white);
+    padding: 25px;
+    transition: all 0.35s ease;
 }
 
-.form-group{
-    line-height: 3;
-    color: var(--body);
+.card-effect:hover {
+    background-color:rgba(0,0,0,0.3);
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+.iconbox {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 32px;
+    border-radius: 100px;
+    flex: none;
 }
 
 
-/* width */
-::-webkit-scrollbar {
-  width: 18px;
+.service {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 8px 22px rgba(0,0,0,0.1) #fff;
-  border-radius: 50px 25px;
-  border:solid 1px --dark;
-  cursor:pointer;
+.service::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background-color: var(--primary);
+    z-index: -1;
+    opacity: 0;
+    transition: all 0.4s ease;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background-color: #0d6efd !important;
-  border-radius: 50px 0px;
-  margin:5px;
+
+.service:hover .iconbox {
+    background-color: var(--white);
+    color: var(--primary);
 }
 
-.logopic{
-  width:200px;
-  border-radius:solid 1px #fff !important;
+.service:hover h5,
+.service:hover p{
+    color: var(--white);
 }
 
-placeholder{
-
-font-size:12px;
+.service:hover::after {
+    opacity: 1;
+    top: 0;
 }
+
+.col-img {
+    background-image: url('');
+    background-position: center;
+    background-size: cover;
+    min-height: 500px;
+}
+
+.project {
+    position: relative;
+    overflow: hidden;
+}
+
+.project .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(21, 20, 51, 0.8);
+    padding: 30px;
+    display: flex;
+    align-items: flex-end;
+    transition: all 0.4s ease;
+    opacity: 0;
+}
+
+.project img {
+    transition: all 0.4s ease;
+}
+
+.project:hover .overlay{
+    opacity: 1;
+}
+
+.project:hover img {
+    transform: scale(1.1);
+}
+
+
+.pricing i {
+    font-size: 20px;
+    color: var(--primary);
+}
+
+.pricing ul li {
+    margin-top: 8px;
+}
+
+.team-member img {
+    width: 125px;
+    height: 125px;
+    border-radius: 100px;
+}
+
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons a {
+    width: 34px;
+    height: 34px;
+    background-color: var(--primary);
+    border-radius: 2px solid var(--primary);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    margin-left: 5px;
+    transition: all 0.4s ease;
+    border: 2px solid var(--primary);
+}
+
+.social-icons a:hover {
+    color: var(--primary);
+    background-color: transparent;
+    border-color: var(--primarys);
+}
+
+.logincard{
+    margin:auto;
+    border-radius:20px 0px;
+    box-shadow: var(--box-shadow);
+    background-color: var(--white);
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.outtacard{
+    padding:350px;
+}
+
+form input.form-control {
+    height: 60px;
+}
+
+form .form-control {
+  border: 1px solid white;
+  background-color :rgba(0,0,0,0.1);
+  border-radius:50px 25px;
+  text-align: center;
+}
+
+
+

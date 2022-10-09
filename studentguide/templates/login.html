@@ -1,84 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends 'layout.html'%}
 
-    {% if title %}
-    <title>SR- {{ title }}</title>
-    {% else %}
-    <title>studentrenting.com</title>
-    {% endif %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layout.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
-    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-</head>
+{% block content%}
 
-<body>
 <style>
-
-.some-space{
-    margin-top:20px;
+.some-space {
+	margin-top: 20px;
 }
 
-.row{
-    margin-top:90px;
+.row {
+	margin-top: 90px;
 }
 
 .subhero {
-    background:url('https://img.staticmb.com/mbcontent/images/uploads/2022/6/White-Brick-Wall-Background-for-.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    position: relative;
-    z-index: 2;
+	background: url('https://img.staticmb.com/mbcontent/images/uploads/2022/6/White-Brick-Wall-Background-for-.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	position: relative;
+	z-index: 2;
 }
 
 
 .subhero::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(21, 20, 51, 0.8);
-    z-index: -1;
+	content: "";
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(21, 20, 51, 0.8);
+	z-index: -1;
 }
+
 </style>
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg py-3 sticky-top navbar-light bg-white">
-    <div class="container">
-        <a class="navbar-brand text-primary info logo" href="{{url_for('home')}}">
-           hilsCYBER
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('home')}}">HOME</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">EXPLORE</a>
-                    </li>
-                </ul>
-            <a href="{{url_for('register')}}">
-                <button class="btn btn-primary ms-lg-3">Join Us</button>
-            </a>
-        </div>
-    </div>
-</nav><!-- //NAVBAR -->
 
 <div class="outtacard py-5 subhero">
     <div class="col-md-10 offset-md-1 logincard">
@@ -128,26 +81,10 @@
 </div>
 
 <div class="row" style="text-align:center;">
-    <hr>
-    <div class="some-space"></div>
     <small>
         Designed by <small class="text-primary">hilsCYBER inc.</small>
     </small>
     <div class="some-space"></div>
-    <hr>
-
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock content %}

@@ -4,11 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% if title %}
     <title>SR- {{ title }}</title>
-    {% else %}
-    <title>studentrenting.com</title>
-    {% endif %}
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -21,8 +18,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <style>
 
+ <style>
 .some-space{
     margin-top:20px;
 }
@@ -30,29 +27,36 @@
 .row{
     margin-top:90px;
 }
-    </style>
+</style>
+
+
 </head>
-<body style="background-color:rgba(229, 228, 226);">
+<body>
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg py-3 sticky-top navbar-light bg-white">
     <div class="container">
-        <a class="navbar-brand text-primary info logo" href="{{url_for('home')}}">
-            hilsCYBER
+        <a class="navbar-brand text-primary logo" href="{{ url_for('home') }}" style="font-family:segoe script;font-size:30px;">
+            studentrental.com
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
             <div class="nav-icons ms-auto">
-             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('home')}}"><i class='bx bx-home'></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class='bx bx-windows'></i></a>
-                </li>
-             </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('home')}}" style="font-size:25px;"><i
+                                class='bx bx-home-circle'></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="font-size:25px;"><i class='bx bx-compass'></i></a>
+                    </li>
+                    <li><a class="nav-link" href="{{url_for('about_page')}}" style="font-size:25px;"><i
+                            class='bx bx-help-circle'></i></a></li>
+                </ul>
             </div>
             <a href="{{url_for('login')}}">
                 <button class="btn btn-primary ms-lg-3">Log In</button>
@@ -143,13 +147,10 @@
 </div>
 
 <div class="row" style="text-align:center;">
-    <hr>
     <div class="some-space"></div>
-    <small>
+    <small class="pb-2">
         Designed by <small class="text-primary">hilsCYBER inc.</small>
     </small>
-    <div class="some-space"></div>
-    <hr>
 
 </div>
 

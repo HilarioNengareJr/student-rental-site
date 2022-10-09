@@ -1,11 +1,17 @@
 import os
-from studentguide import app, bcrypt, db, photos
+from studentguide import app, bcrypt, db
 from werkzeug.utils import secure_filename
-from flask import render_template, flash, redirect, url_for, request, session
-from studentguide.forms import LoginForm, RegistrationForm, UpdateAccountForm, MyForm
+from flask import render_template, flash, redirect, url_for, request, send_from_directory
+from studentguide.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm
 from studentguide.models import User, Post
 from flask_login import current_user, logout_user, login_user, login_required
 from studentguide.utilities import save_picture
+
+
+# Error handling for large files.
+@app.errorhandler(413)
+def too_large(e):
+    return "File is too large", 413
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -67,44 +73,40 @@ def account():
                            image_file=image_file, form=form)
 
 
-@app.route("/post/new", methods=['GET', 'POST'])
-@login_required
+@app.route('/post/new')
+def _upload_file():
+    #  os.listdir() gets the list of files in the upload location and sends it down to the template for rendering.
+    files = os.listdir(app.config['UPLOAD_PATH'])
+    return render_template('upload_file.html', files=files)
+
+
+@app.route('/post/new', methods=['POST', 'GET'])
 def upload_file():
-    form = MyForm()
-    file_urls = []
-
-    if request.method == 'POST':
-        file_obj = request.files
-        for f in file_obj:
-            file = request.files.get(f)
-
-            filename = photos.save(file, name=file.filename)
-            # append image urls
-            file_urls.append(photos.url(filename))
-
-        return redirect(url_for('home'))
-
-    return render_template('upload_file.html', form=form)
+    for uploaded_file in request.files.getlist('file'):
+        filename = secure_filename(uploaded_file.filename)
+        if filename != '':
+            file_ext = os.path.splitext(filename)[1]
+            if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+                return "Invalid Image", 400
+            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+        return redirect(url_for('_upload_file'))
 
 
-@app.route('/results')
-def results():
-    # redirect to home if no images to display
-    if "file_urls" not in session or session['file_urls'] == []:
-        return redirect(url_for('index'))
-
-    # set the file_urls and remove the session variable
-    file_urls = session['file_urls']
-    session.pop('file_urls', None)
-
-    return render_template('post.html', file_urls=file_urls)
+#  The uploads are saved to a directory outside of the static folder, this route is used to serve them.
+@app.route('/uploads/<filename>')
+def upload(filename):
+    return send_from_directory(app.config['UPLOAD_PATH'], filename)
 
 
-# deal with user posts
+@app.route('post/details')
+def post_details():
+    pass
+
+
 @app.route('/post')
 def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title="Explore", post=post)
+    _post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title="Explore", post=_post)
 
 
 @app.route('/about_page')

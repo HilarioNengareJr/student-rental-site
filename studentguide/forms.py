@@ -4,7 +4,6 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
 from studentguide.models import User
-import phonenumbers
 
 
 class RegistrationForm(FlaskForm):
@@ -56,15 +55,10 @@ class LikeForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-#
-# class PostForm(FlaskForm):
-#     images = FileField('Images', validators=[FileAllowed(['jpg', 'png'])])
-#     location = StringField('Address', validators=[DataRequired(), Length(min=5, max=140)])
-#     city = StringField('District', validators=[DataRequired(), Length(min=5, max=12)])
-#     phone_number = StringField('Contact', validators=[DataRequired()])
-#     description = TextAreaField('Description', validators=[DataRequired()])
-#     submit = SubmitField('Post')
-
-class MyForm(FlaskForm):
+class PostForm(FlaskForm):
     file = FileField('File')
+    location = StringField('Address', validators=[DataRequired(), Length(min=5, max=140)])
+    city = StringField('District', validators=[DataRequired(), Length(min=5, max=12)])
+    phone_number = StringField('Contact', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
     submit = SubmitField('Submit')

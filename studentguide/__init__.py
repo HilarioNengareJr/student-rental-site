@@ -4,25 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
-from flask_dropzone import Dropzone
-from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
-
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'Sick Rat'
-dropzone = Dropzone(app)
-# Dropzone settings
-app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
-app.config['DROPZONE_ALLOWED_FILE_CUSTOM'] = True
-app.config['DROPZONE_ALLOWED_FILE_TYPE'] = 'image/*'
-app.config['DROPZONE_REDIRECT_VIEW'] = 'results'
-# Uploads settings
-app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/static/uploads'
-photos = UploadSet('photos', IMAGES)
-configure_uploads(app, photos)
-patch_request_class(app)  # set maximum file size, default is 16MB
 
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['UPLOAD_EXTENSIONS'] = ['.png', '.jpg', '.jpeg', '.gif']
+app.config['UPLOAD_PATH'] = './studentguide/static/uploads'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///studentguide.db'
 bootstrap = Bootstrap(app)
 login_manager = LoginManager(app)
