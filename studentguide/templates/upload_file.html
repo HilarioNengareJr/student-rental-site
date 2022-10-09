@@ -82,6 +82,8 @@ label:hover{
    position: absolute;
    z-index: -1;
 }
+
+
 </style>
 
 <div class="containerl">
@@ -99,20 +101,22 @@ label:hover{
     </div>
 
 
-<div class="center">
-    <form method="POST" action="" enctype="multipart/form-data">
-        <label class="text-primary" for="upload-photo">Click here to choose files to upload!</label>
-        <p><input type="file" name="file" id="upload-photo"></p>
-        <p><input class="btn" type="submit" value="Add"></p>
-    </form>
-</div>
+    <div class="center">
+        <form method="POST" action="" enctype="multipart/form-data">
+            <label class="text-primary" for="upload-photo">Click here to choose files to upload!</label>
+            <p><input type="file" name="file" id="upload-photo"></p>
+            <p><input class="btn" type="submit" value="Add"></p>
+        </form>
+    </div>
 
     <div class="dropzone-card">
         {% for file in files %}
         <img class="image" src="{{ url_for('static', filename='uploads/'+file) }}" style="width: 100px;margin:15px;">
         {% endfor %}
     </div>
-    <p><button>Done</button></p>
+    <div class=" pt-3 d-flex justify-content-center">
+        <a class="nav-icons" href="{{ url_for('post_details') }}" style="font-size:25px;">Click to add more information.. </a>
+    </div>
 
     <div class="row" style="text-align:center;">
         <div class="some-space"></div>

@@ -98,9 +98,16 @@ def upload(filename):
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
 
 
-@app.route('post/details')
+@app.route('/post/details')
 def post_details():
-    pass
+    form = PostForm()
+
+    if form.validate_on_submit():
+        post = Post()
+
+        return redirect(url_for('home'))
+
+    return render_template('post_details.html')
 
 
 @app.route('/post')
