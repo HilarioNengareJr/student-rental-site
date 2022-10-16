@@ -5,17 +5,18 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-7 mx-auto text-center">
-                <h1 class="display-4 text-white" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Bringing apartment
-                    hunting online!!</h1>
+                <div class="contain">
+                <h1 class="display-4 text-white" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);"><span id="typed"></span></h1>
+                </div>
                 <p class="text-white my-3" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">We as students do not have
                     ample time, considering the average workload we
                     heave on daily basis. So we decided to bring house searching online - to make it accessible at the
                     click of your touchscreen.. </p>
-                <a href="#" class="btn me-2 btn-primary" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Get
+                <a class="btn me-2 btn-primary" href="#" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Get
                     Started</a>
                 {% if not current_user.is_authenticated %}
-                <a href="{{url_for('login')}}" class="btn btn-outline-light" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Log
-                    In</a>
+                <a class="btn btn-outline-light" href="{{url_for('register')}}" id="register"
+                   style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Sign Up</a>
                 {% endif %}
             </div>
         </div>
@@ -27,43 +28,43 @@
 <section id="contact">
     <div class="container">
         <div class="row mb-5">
-            <div class="col-md-8 mx-auto text-center">
+            <div class="col-md-8 mx-auto text-center scroll-review">
                 <h6 class="text-primary">CONTACT</h6>
                 <h1>Get In Touch</h1>
-                <p>Leave your thoughts down below please.</p>
+                <p class="text-success">Leave your thoughts down below please.</p>
             </div>
         </div>
-
-        <form action="" class="row g-3 justify-content-center">
-            <div class="col-md-5">
-                <input type="text" class="form-control" placeholder="Full Name">
-            </div>
-            <div class="col-md-5">
-                <input type="text" class="form-control" placeholder="Enter E-mail">
-            </div>
-            <div class="col-md-10">
-                <input type="text" class="form-control" placeholder="Enter Subject">
-            </div>
-            <div class="col-md-10">
-                    <textarea name="" id="" cols="30" rows="5" class="form-control"
-                              placeholder="Enter Message"></textarea>
-            </div>
-            <div class="col-md-10 d-grid">
-                <button class="btn btn-primary">Contact</button>
-            </div>
-        </form>
+        <div class="logincard scroll-review pt-6 text-success">
+            <form action="" class="row g-3 justify-content-center">
+                <div class="col-md-5">
+                    <input class="form-control" placeholder="Full Name" type="text">
+                </div>
+                <div class="col-md-5">
+                    <input class="form-control" placeholder="Enter E-mail" type="text">
+                </div>
+                <div class="col-md-10">
+                    <input class="form-control" placeholder="Enter Subject" type="text">
+                </div>
+                <div class="col-md-10">
+                    <textarea class="form-control" cols="30" id="" name="" placeholder="Enter Message"
+                              rows="5"></textarea>
+                </div>
+                <div class="col-md-10 d-grid scroll-review">
+                    <button class="btn btn-primary scroll-review-this">Contact</button>
+                </div>
+            </form>
+        </div>
     </div>
 </section><!-- CONTACT -->
 
-
-<footer>
+<footer class="scroll-review">
     <div class="footer-top">
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-4">
-                    <img class="logopic" style="border-radius:50%;"
+                    <img alt="" class="logopic"
                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQc2qLybq7Ft4LJeP-l3rmWT66VedorQ1HSg&usqp=CAU"
-                         alt="">
+                         style="border-radius:50%;">
                 </div>
                 <div class="col-lg-2">
                     <h5 class="text-white">Brand</h5>
@@ -97,7 +98,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="mb-0">© 2022 copyright all rights reserved | Designed by <small class="text-primary">hilsCYBER inc.</small>
+                    <p class="mb-0">© 2022 copyright all rights reserved | Designed by <small class="text-primary">hilsCYBER
+                        inc.</small>
                     </p>
                 </div>
                 <div class="col-md-6">
@@ -111,5 +113,6 @@
         </div>
     </div>
 </footer>
+
 
 {%endblock content%}

@@ -84,7 +84,7 @@ body {
     <div class="vh-100 align-items-center d-flex justify-content-center">
         <div class="content-section">
             <div class="media me-auto">
-                <img class="rounded-circle account-img" src="{{ image_file }}">
+                <img class="rounded-circle account-img" src="{{ image_file }}" alt="">
                 <div class="media-body">
                     <p class="account-heading">{{ current_user.first_name }}</p>
                     <p class="text-secondary"><i class="fas fa-envelope"></i> {{ current_user.email }}</p>
@@ -92,7 +92,7 @@ body {
                 </div>
             </div>
             <div class="update-pro">
-                <form method="POST" action="" enctype="multipart/form-data">
+                <form action="" enctype="multipart/form-data" method="POST">
                     {{ form.hidden_tag() }}
                     <fieldset class="form-group">
                         <legend class="border-bottom mb-4">Account Info</legend>

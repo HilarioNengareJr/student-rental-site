@@ -4,10 +4,12 @@
 
 <style>
 .dropzone-card {
-	background-color: #fff;
-	padding: 10%;
-	margin: 40px;
 	box-shadow:0 8px 22px rgba(0,0,0,0.2);
+	border: 2px dashed #0087F7;
+	margin: 5%;
+	min-height: 400px;
+	width:75%;
+	border-radius:5px;
 }
 
 .some-space {
@@ -61,11 +63,14 @@ textarea {
 }
 
 .btn{
-    margin-left:90px;
     padding: 14px 18px;
     border-width: 2px;
     border-radius: 50px 25px;
     border: 1px dashed #0d6efd;
+}
+
+.btn:hover{
+    color:#fff !important;
 }
 
 label {
@@ -84,15 +89,22 @@ label:hover{
 }
 
 
+hr{
+    width:85%;
+    margin:auto;
+    border: 1px;
+    color: #0087F7 !important;
+}
+
 </style>
 
 <div class="containerl">
     <div class="row mb-5">
         <div class="col-md-8 mx-auto text-center">
             <h6 class="text-primary">POST</h6>
-            <h1>Upload image files.</h1>
-            <p>
-                Click inside the white dropzone and select files you wish to upload.<br>Please comply with website rules
+            <h1><span id="typed2"></span></h1>
+            <p class="text-success">
+                Click inside the box to add photos or simply drag selected files you wish to upload.<br>Scroll to add rental details. Please comply with website rules
                 or you
                 will
                 be banned!
@@ -100,31 +112,88 @@ label:hover{
         </div>
     </div>
 
+<div class="d-flex justify-content-center">
+    <form action="{{ url_for('upload_file') }}" class="dropzone dropzone-card">
+    </form>
+</div>
+    <hr>
+    <div class="outtacont">
+        <div class="logincard">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group text-info">
+                    <legend class="border-bottom mb-4">Post Details</legend>
+                    <div class="form-group">
+                        {{ form.location.label(class="form-control-label") }}
+                        {% if form.location.errors %}
+                        {{ form.location(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.location.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.location(class="form-control form-control-lg text-success", id="tags") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.city.label(class="form-control-label") }}
+                        {% if form.city.errors %}
+                        {{ form.city(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.city.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.city(class="form-control form-control-lg text=success", list="cities") }}
+                        <datalist id="cities">
+                            <option value="GUZELYURT">
+                            <option value="NICOSIA">
+                            <option value="LEFKE">
+                        </datalist>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.description.label(class="form-control-label") }}
+                        {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            <!--                        add number etc and edit css-->
+                            {% for error in form.description.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.description(class="form-control form-control-lg text-success") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
 
-    <div class="center">
-        <form method="POST" action="" enctype="multipart/form-data">
-            <label class="text-primary" for="upload-photo">Click here to choose files to upload!</label>
-            <p><input type="file" name="file" id="upload-photo"></p>
-            <p><input class="btn" type="submit" value="Add"></p>
-        </form>
+                <div class="form-group d-flex justify-content-center">
+                    {{ form.submit(class="btn btno btn-outline-info") }}
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="dropzone-card">
-        {% for file in files %}
-        <img class="image" src="{{ url_for('static', filename='uploads/'+file) }}" style="width: 100px;margin:15px;">
-        {% endfor %}
-    </div>
-    <div class=" pt-3 d-flex justify-content-center">
-        <a class="nav-icons" href="{{ url_for('post_details') }}" style="font-size:25px;">Click to add more information.. </a>
-    </div>
-
-    <div class="row" style="text-align:center;">
-        <div class="some-space"></div>
-        <small>
-            Designed by <small class="text-primary">hilsCYBER inc.</small>
-        </small>
-        <div class="some-space"></div>
-    </div>
+</div>
+<div class="row" style="text-align:center;">
+    <small>
+        Designed by <small class="text-primary">hilsCYBER inc.</small>
+    </small>
 </div>
 
+<script>
+//typed.js
+    new Typed('#typed2',{
+        strings : ['Upload image files.'],
+        typeSpeed : 70,
+        delaySpeed : 10,
+        loop : false,
+        showCursor: false
+});
+
+
+</script>
 {% endblock content %}

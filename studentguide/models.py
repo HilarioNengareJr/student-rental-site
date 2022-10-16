@@ -27,39 +27,38 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(140))
+    images = db.Column(db.String(800))
     location = db.Column(db.String(200))
-    images = db.Column(db.String(200))
     city = db.Column(db.String(200))
-    phone_number = db.Column(db.String(40))
+    description = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    comments = db.relationship('Comment', backref='post', lazy='dynamic')
-    likes = db.relationship('Like', backref='post', lazy='dynamic')
+    # comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    # likes = db.relationship('Like', backref='post', lazy='dynamic')
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
-
-class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-
-    def __repr__(self):
-        return '<Comment {}>'.format(self.body)
-
-
-class Like(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-
-    def __repr__(self):
-        return '<Like {}>'.format(self.body)
+#
+# class Comment(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     body = db.Column(db.String(140))
+#     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+#     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+#     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+#
+#     def __repr__(self):
+#         return '<Comment {}>'.format(self.body)
+#
+#
+# class Like(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+#     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+#     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+#
+#     def __repr__(self):
+#         return '<Like {}>'.format(self.body)
 
 
 def init_db():

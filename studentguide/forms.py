@@ -1,3 +1,4 @@
+import phonenumbers
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from flask_wtf.file import FileField, FileAllowed
@@ -59,6 +60,5 @@ class PostForm(FlaskForm):
     file = FileField('File')
     location = StringField('Address', validators=[DataRequired(), Length(min=5, max=140)])
     city = StringField('District', validators=[DataRequired(), Length(min=5, max=12)])
-    phone_number = StringField('Contact', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     submit = SubmitField('Submit')
