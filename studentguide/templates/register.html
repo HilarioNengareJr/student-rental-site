@@ -24,8 +24,8 @@
     margin-top:20px;
 }
 
-.row{
-    margin-top:90px;
+form{
+    width:90%;
 }
 </style>
 
@@ -66,7 +66,7 @@
 </nav><!-- //NAVBAR -->
 
 <div class="outtacard py-5 subhero1">
-    <div class="col-md-10 offset-md-1 logincard">
+    <div class="logincard mb-5 mt-5">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
@@ -97,6 +97,19 @@
                     </div>
                     {% else %}
                     {{ form.last_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.phone_number.label(class="form-control-label") }}
+                    {% if form.phone_number.errors %}
+                    {{ form.phone_number(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.phone_number.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.phone_number(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">

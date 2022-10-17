@@ -42,7 +42,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data,
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data,phone_number=form.phone_number.data, email=form.email.data,
                     password=hashed_password)
         user.set_username(form.first_name.data, form.last_name.data)
         db.session.add(user)
@@ -107,7 +107,7 @@ def upload(filename):
 @app.route('/post/<int:post_id>')
 def post(post_id):
     _post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title="Explore", post=_post)
+    return render_template('post.html', title="Post", post=_post)
 
 
 @app.route('/about_page')

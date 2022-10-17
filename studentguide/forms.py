@@ -10,6 +10,7 @@ from studentguide.models import User
 class RegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired(), Length(min=2, max=20)])
     last_name = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=20)])
+    phone_number = StringField('Phone Number', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])

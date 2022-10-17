@@ -132,15 +132,20 @@
 <!--Custom Animations from JS-->
 <script>
 // ScrollReveal is a JavaScript library for easily animating elements as they enter/leave the viewport.
-    ScrollReveal().reveal('.scroll-review',{ delay: 250});
+//    ScrollReveal().reveal('.scroll-review',{ delay: 250});
 
 //typed.js
     new Typed('#typed',{
-        strings : ['Bringing apartment hunting online !'],
+        strings : ['apartment.', 'home.', 'office.'],
         typeSpeed : 70,
         delaySpeed : 10,
-        loop : false,
-        showCursor: false
+        loop : true,
+        showCursor: true,
+        startDelay: 1200,
+		// backspacing speed
+		backSpeed: 100,
+		// time before backspacing
+		backDelay: 500
 });
 </script>
 

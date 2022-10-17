@@ -7,7 +7,7 @@
 	margin: auto;
 }
 
-.outtacont,
+article,
 form {
 	width: 70%;
 	margin: auto;
@@ -15,23 +15,69 @@ form {
 	margin-bottom: 45px;
 }
 
+.post-metadata{
+    margin-right:75%;
+}
+
+.contact-info{
+
+}
+
+
+
+
 
 </style>
 
-<div class="outtacont">
-    <div class="logincard">
-        <div class="media">
-            <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.profile_image) }}">
-            <div class="media-body">
-                <h5 class="mt-0">Media heading</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
-                odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-                fringilla. Donec lacinia congue felis in faucibus.
+
+<article class="media content-section">
+    <img class="rounded-circle article-img"
+         src="{{ url_for('static', filename='profile_pics/' + post.author.profile_image) }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ post.author.username }}</a>
+            <small class="text-muted">{{ post.timestamp.strftime('%Y-%m-%d') }}</small>
+            {% if post.author == current_user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1"
+                   href="#">Update</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
+                        data-target="#deleteModal">Delete
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        <img src="" alt="images here!">
+        <p class="article-content">{{ post.description }}</p>
+    </div>
+</article>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form action="#" method="POST">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+
+<div class="mt-5 mb-5" style="text-align:center;">
+    <small>
+        Designed by <small class="text-primary">hilsCYBER inc.</small>
+    </small>
+</div>
 <script>
 //typed.js
 new Typed('#typed3',{
@@ -41,6 +87,11 @@ new Typed('#typed3',{
      loop : false,
      showCursor: false
 });
+
+
+
+
+
 
 </script>
 
