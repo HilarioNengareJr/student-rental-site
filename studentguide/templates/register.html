@@ -35,7 +35,7 @@ form{
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg py-3 sticky-top navbar-light bg-white">
     <div class="container">
-        <a class="navbar-brand text-primary logo" href="{{ url_for('home') }}" style="font-family:segoe script;font-size:30px;">
+        <a class="navbar-brand text-primary logo" href="{{ url_for('home') }}" style="font-family:segoe script;">
             studentrental.com
         </a>
 
@@ -100,19 +100,6 @@ form{
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.phone_number.label(class="form-control-label") }}
-                    {% if form.phone_number.errors %}
-                    {{ form.phone_number(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.phone_number.errors %}
-                        <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.phone_number(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}
                     {{ form.email(class="form-control form-control-lg is-invalid") }}
@@ -152,19 +139,19 @@ form{
                     {% endif %}
                 </div>
             </fieldset>
+            <div class="d-flex justify-content-center">
             <div class="form-group" style="margin-top:10px;">
                 {{ form.submit(class="btn btn-outline-info") }}
+            </div>
             </div>
         </form>
     </div>
 </div>
 
-<div class="row" style="text-align:center;">
-    <div class="some-space"></div>
+<div class="pt-5 pb-5" style="text-align:center;">
     <small class="pb-2">
         Designed by <small class="text-primary">hilsCYBER inc.</small>
     </small>
-
 </div>
 
 <script src="js/bootstrap.bundle.min.js"></script>

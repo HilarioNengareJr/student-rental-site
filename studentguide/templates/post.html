@@ -19,36 +19,114 @@ form {
     margin-right:75%;
 }
 
-.contact-info{
+.content-section{
+    width: 75%;
+}
+
+.media-body{
+    width:90%;
+    min-height:90%;
+    margin:auto;
+}
+
+
+hr{
+    border-color: var(--primary);
+}
+
+
+.description-wrapper{
+    color:;
+    display: flex;
+	justify-content: left;
+}
+
+.article-metadata{
+    display: flex;
+	justify-content: center;
+}
+
+.delete-edit{
 
 }
 
 
 
 
-
 </style>
-
-
+{% if current_user.is_authenticated %}
+<div class="mt-5 mb-5">
+    <div class="col-md-8 mx-auto text-center">
+        <h6 class="text-primary">POST</h6>
+        <h1><span id="typed3"></span></h1>
+        <p class="text-success">
+            Scroll down below to modify or remove your post.
+        </p>
+    </div>
+</div>
+{% else %}
+<div class="mt-5 mb-5">
+    <div class="col-md-8 mx-auto text-center">
+        <h6 class="text-primary">POST</h6>
+        <h1><span id="typed4"></span></h1>
+        <p class="text-success">
+            You can click on the contact to save the whatsapp or phone contact.
+            Please share this site with others, and thank you again!
+        </p>
+    </div>
+</div>
+{% endif %}
 <article class="media content-section">
+    <div class="ml-2 mb-3">
+
+    </div>
+    <br>
     <img class="rounded-circle article-img"
          src="{{ url_for('static', filename='profile_pics/' + post.author.profile_image) }}">
     <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="#">{{ post.author.username }}</a>
-            <small class="text-muted">{{ post.timestamp.strftime('%Y-%m-%d') }}</small>
-            {% if post.author == current_user %}
-            <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1"
-                   href="#">Update</a>
-                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
-                        data-target="#deleteModal">Delete
-                </button>
-            </div>
-            {% endif %}
+        <br>
+        <div>
+            <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d') }} by {{ post.author.username
+                }}</small>
         </div>
-        <img src="" alt="images here!">
-        <p class="article-content">{{ post.description }}</p>
+        <br>
+        <h5> House Images </h5>
+        <hr>
+        <div class="mt-3">
+            {% for file in files %}
+            <img src="{{ url_for('static', filename='uploads/' + file) }}" style="width: 100px">
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="article-metadata d-flex justify-content-between text-success">
+            <small>
+                <i class='bx bx-current-location'></i> {{ post.location }}
+            </small>
+            <small>
+                <i class='bx bxl-whatsapp'></i> {{ post.whatsapp }}
+            </small>
+            <small>
+                <i class='bx bxs-phone-incoming'></i> {{ post.phonenum }}
+            </small>
+            <small>
+                <i class='bx bxs-city'></i> {{post.city}}
+            </small>
+        </div>
+        <br>
+        <h5> About House </h5>
+        <div class="description-wrapper text-success">
+            <blockquote class="article-content">{{ post.description }}</blockquote>
+        </div>
+        <br>
+        {% if post.author == current_user %}
+        <div class="delete-edit d-flex justify-content-end">
+            <a class="btn btn-outline-secondary btn-sm mt-1 mb-1"
+               href="#" style="font-size:25px;"><i class='bx bxs-edit'></i></a>
+            <button type="button" class="btn btn-outline-danger btn-sm m-1" data-toggle="modal"
+                    data-target="#deleteModal" style="font-size:25px;"><i class='bx bx-trash'></i>
+            </button>
+        </div>
+        {% endif %}
     </div>
 </article>
 <!-- Modal -->
@@ -80,18 +158,21 @@ form {
 </div>
 <script>
 //typed.js
-new Typed('#typed3',{
-     strings : ['Upload image files.'],
-     typeSpeed : 70,
-     delaySpeed : 10,
-     loop : false,
-     showCursor: false
+    new Typed('#typed3',{
+        strings : ['Update or Delete Post.'],
+        typeSpeed : 70,
+        delaySpeed : 10,
+        loop : false,
+        showCursor: false
 });
 
-
-
-
-
+    new Typed('#typed4',{
+        strings : ['Please Like and Comment.'],
+        typeSpeed : 70,
+        delaySpeed : 10,
+        loop : false,
+        showCursor: false
+});
 
 </script>
 

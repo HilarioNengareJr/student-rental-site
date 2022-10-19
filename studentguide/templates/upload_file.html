@@ -101,7 +101,7 @@ hr{
 <div class="containerl">
     <div class="row mb-5">
         <div class="col-md-8 mx-auto text-center">
-            <h6 class="text-primary">POST</h6>
+            <h6 class="text-primary">ADD POST</h6>
             <h1><span id="typed2"></span></h1>
             <p class="text-success">
                 Click inside the box to add photos or simply drag selected files you wish to upload.<br>Scroll to add rental details. Please comply with website rules
@@ -123,6 +123,32 @@ hr{
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group text-info">
                     <legend class="border-bottom mb-4">Post Details</legend>
+                    <div class="form-group">
+                        {{ form.whatsapp.label(class="form-control-label") }}
+                        {% if form.whatsapp.errors %}
+                        {{ form.whatsapp(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.whatsapp.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.whatsapp(class="form-control form-control-lg text-success", id="tags") }}
+                        {% endif %}
+                    </div>
+                     <div class="form-group">
+                        {{ form.phonenum.label(class="form-control-label") }}
+                        {% if form.phonenum.errors %}
+                        {{ form.phonenum(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.phonenum.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.phonenum(class="form-control form-control-lg text-success", id="tags") }}
+                        {% endif %}
+                    </div>
                     <div class="form-group">
                         {{ form.location.label(class="form-control-label") }}
                         {% if form.location.errors %}

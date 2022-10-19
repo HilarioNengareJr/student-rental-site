@@ -13,7 +13,6 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(64), index=True, nullable=False)
     last_name = db.Column(db.String(64), index=True, nullable=False)
     username = db.Column(db.String(128), index=True, nullable=False)
-    phone_number = db.Column(db.String(10), nullable=False)
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
     password = db.Column(db.String(128))
     profile_image = db.Column(db.String(20), default='default.jpg')
@@ -28,9 +27,10 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    images = db.Column(db.String(800))
     location = db.Column(db.String(200))
     city = db.Column(db.String(200))
+    phone_number = db.Column(db.String(10), nullable=False)
+    whatsapp = db.Column(db.String(10), nullable=False)
     description = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

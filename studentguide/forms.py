@@ -1,8 +1,8 @@
 import phonenumbers
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, FormField
 from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp
 from flask_login import current_user
 from studentguide.models import User
 
@@ -59,7 +59,13 @@ class LikeForm(FlaskForm):
 
 class PostForm(FlaskForm):
     file = FileField('File')
-    location = StringField('Address', validators=[DataRequired(), Length(min=5, max=140)])
+    whatsapp = StringField('Whatsapp',
+                           validators=[DataRequired(), Length(min=10, max=14)],
+                           render_kw={"Placeholder": "0533 ___ ____"})
+    phonenum = StringField('Phone', validators=[DataRequired(), Length(min=10, max=14)],
+                           render_kw={"Placeholder": "0533 ___ ____"})
+    location = StringField('Address', validators=[DataRequired(), Length(min=5, max=140)],
+                           render_kw={"Placeholder": "1 Bozkurt Sokak"})
     city = StringField('District', validators=[DataRequired(), Length(min=5, max=12)])
     description = TextAreaField('Description', validators=[DataRequired()])
     submit = SubmitField('Submit')

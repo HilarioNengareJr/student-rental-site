@@ -1,7 +1,7 @@
 import os
 from studentguide import app, bcrypt, db
 from werkzeug.utils import secure_filename
-from flask import render_template, flash, redirect, url_for, request, send_from_directory
+from flask import render_template, flash, redirect, url_for, request, send_from_directory, session, abort
 from studentguide.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm
 from studentguide.models import User, Post
 from flask_login import current_user, logout_user, login_user, login_required
@@ -42,7 +42,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(first_name=form.first_name.data, last_name=form.last_name.data,phone_number=form.phone_number.data, email=form.email.data,
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data,
                     password=hashed_password)
         user.set_username(form.first_name.data, form.last_name.data)
         db.session.add(user)
@@ -76,7 +76,6 @@ def account():
 @app.route('/post/new', methods=['POST', 'GET'])
 def upload_file():
     form = PostForm()
-    file_urls = list()
     for uploaded_file in request.files.getlist('file'):
         filename = secure_filename(uploaded_file.filename)
         if filename != '':
@@ -93,12 +92,10 @@ def upload_file():
 
         return redirect(url_for('post', post_id=_post.id))
 
-    #  os.listdir() gets the list of files in the upload location and sends it down to the template for rendering.
-    files = os.listdir(app.config['UPLOAD_PATH'])
-    return render_template('upload_file.html', title="Upload", files=files, form=form)
+    return render_template('upload_file.html', title="Upload", form=form)
 
 
-#  The uploads are saved to a directory outside of the static folder, this route is used to serve them.
+#  The uploads are saved to a directory outside the static folder, this route is used to serve them.
 @app.route('/uploads/<filename>')
 def upload(filename):
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
@@ -107,7 +104,45 @@ def upload(filename):
 @app.route('/post/<int:post_id>')
 def post(post_id):
     _post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title="Post", post=_post)
+    #  os.listdir() gets the list of files in the upload location and sends it down to the template for rendering.
+    files = os.listdir(app.config['UPLOAD_PATH'])
+    return render_template('post.html', title="Post", post=_post, files=files)
+
+
+@app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    _post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        _post.whatsapp = form.whatsapp.data
+        _post.phonenum = form.phonenum.data
+        _post.location = form.location.data
+        _post.city = form.city.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('post', post_id=_post.id))
+    elif request.method == 'GET':
+        form.whatsapp.data = _post.whatsapp
+        form.phonenum.data = _post.phonenum
+        form.location.data = _post.location
+        form.city.data = _post.city
+    return render_template('upload_file.html', title='Update Post',
+                           form=form, legend='Update Post')
+
+
+@app.route("/post/<int:post_id>/delete", methods=['POST'])
+@login_required
+def delete_post(post_id):
+    _post = Post.query.get_or_404(post_id)
+    if _post.author != current_user:
+        abort(403)
+    db.session.delete(_post)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('home'))
 
 
 @app.route('/about_page')
