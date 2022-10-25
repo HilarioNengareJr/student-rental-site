@@ -1,0 +1,112 @@
+{% extends 'layout.html'%}
+
+{% block content %}
+<style>
+    article{
+        width:75%;
+        margin:auto;
+        box-shadow: var(--box-shadow);
+    }
+
+    .so-nice{
+        padding:50px;
+    }
+
+    hr{
+        color:var(--primary);
+    }
+
+
+</style>
+<div class="mt-5 mb-5">
+    <div class="col-md-8 mx-auto text-center">
+        <h6 class="text-primary">BROWSE</h6>
+        <h1><span id="typed4"></span></h1>
+        <p class="text-success">
+            You can scroll down or search above! Click on the posts to expand them, in order to get a perfect view.
+        </p>
+    </div>
+</div>
+
+{% for post in posts %}
+
+<article class="rounded-end mt-5 mb-5 scroll-review">
+    <div class="so-nice">
+        <div class="ml-2 mb-3">
+
+        </div>
+        <br>
+        <img class="rounded-circle article-img"
+             src="{{ url_for('static', filename='profile_pics/' + post.author.profile_image) }}">
+        <div class="media-body">
+            <br>
+            <div>
+                <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d') }} by {{ post.author.username
+                    }}
+                </small>
+            </div>
+            <br>
+            <h5> House Images </h5>
+            <hr>
+            <div class="mt-3">
+                {% for file_url in file_urls %}
+                <img class="mt-3" src="{{ url_for('static', filename='uploads/' + file_url) }}"
+                     style="width: 100px">
+                {% endfor %}
+            </div>
+            <hr>
+
+            <div class="article-metadata d-flex justify-content-between text-success">
+                <small>
+                    <i class='bx bx-current-location'></i> {{ post.location }}
+                </small>
+                <small>
+                    <i class='bx bxl-whatsapp'></i> {{ post.whatsapp }}
+                </small>
+                <small>
+                    <i class='bx bxs-phone-incoming'></i> {{ post.phone_number }}
+                </small>
+                <small>
+                    <i class='bx bxs-city'></i> {{ post.city }}
+                </small>
+            </div>
+            <br>
+            <h5> About House </h5>
+            <div class="description-wrapper text-success">
+                <blockquote class="article-content">{{ post.description }}</blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a href="{{ url_for('post', post_id=post.id)}}">
+            <button class="btn btno btn-outline-success mb-5">
+                VIEW
+            </button>
+        </a>
+    </div>
+</article>
+
+{% endfor %}
+
+<div class="mt-5 mb-5" style="text-align:center;">
+    <small>
+        Designed by <small class="text-primary">hilsCYBER inc.</small>
+    </small>
+</div>
+
+<script>
+//typed.js
+    new Typed('#typed4',{
+        strings : ['Browse to find what you like.'],
+        typeSpeed : 50,
+        delaySpeed : 10,
+        loop : false,
+        showCursor: false
+});
+
+
+
+
+</script>
+
+{% endblock content%}

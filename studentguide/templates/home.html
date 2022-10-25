@@ -6,16 +6,18 @@
         <div class="row">
             <div class="col-lg-7 mx-auto text-center">
                 <div class="contain typed_wrap mb-2">
-                    <h1 class="display-4 text-white" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Find your <p></p><span id="typed"></span></p></h1>
+                    <h1 class="display-4 text-white" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Find your <p></p>
+                        <span id="typed"></span></p></h1>
                 </div>
                 <p class="text-white my-3" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">We as students do not have
                     ample time, considering the average workload we
                     heave on daily basis. So we decided to bring house searching online - to make it accessible at the
                     click of your touchscreen.. </p>
-                <a class="btn me-2 btn-primary" href="#" style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Get
+                <a class="btn me-2 btn-primary" href="{{ url_for('browse')}}"
+                   style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Get
                     Started</a>
                 {% if not current_user.is_authenticated %}
-                <a class="btn btn-outline-light" href="{{url_for('register')}}" id="register"
+                <a class="btn btn-outline-light" href="{{url_for('login')}}" id="register"
                    style="text-shadow:2px 2px 5px rgba(0,0,0,0.1);">Log In</a>
                 {% endif %}
             </div>
@@ -28,7 +30,7 @@
 <section id="contact">
     <div class="container">
         <div class="row mb-5">
-            <div class="col-md-8 mx-auto text-center scroll-review">
+            <div class="col-md-8 mx-auto text-center">
                 <h6 class="text-primary">CONTACT</h6>
                 <h1>Get In Touch</h1>
                 <p class="text-success">Leave your thoughts down below please.</p>
@@ -49,70 +51,45 @@
                     <textarea class="form-control" cols="30" id="" name="" placeholder="Enter Message"
                               rows="5"></textarea>
                 </div>
-                <div class="col-md-10 d-grid scroll-review">
-                    <button class="btn btn-primary scroll-review-this">Contact</button>
+                <div class="col-md-10 d-grid">
+                    <button class="btn btn-primary">Contact</button>
                 </div>
             </form>
         </div>
     </div>
 </section><!-- CONTACT -->
 
-<footer class="scroll-review">
-    <div class="footer-top">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-4">
-                    <img alt="" class="logopic"
-                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQc2qLybq7Ft4LJeP-l3rmWT66VedorQ1HSg&usqp=CAU"
-                         style="border-radius:50%;">
+<hr class="text-primary">
+<div class="mt-5 mb-5" style="text-align:center;">
+    <small>
+        Designed by <small class="text-primary">hilsCYBER inc.</small>
+    </small>
+    <div class="mt-3 d-flex justify-content-around">
+        <p><a href="#">Address: Guzelyurt North Cyprus</a></p>
+        <p><a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox">Email: hnengare@gmail.com</a>
+        </p>
+        <p><a href="#+90 533 850 2322">Phone: +90 533 850 2322</a></p>
+    </div>
+</div>
+</div>
+</div>
+<div class="footer-bottom py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mb-0">© 2022 copyright all rights reserved | Designed by <small class="text-primary">Hilario Nengare.</small>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="social-icons">
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-twitter'></i></a>
+                    <a href="#"><i class='bx bxl-instagram-alt'></i></a>
                 </div>
-                <div class="col-lg-2">
-                    <h5 class="text-white">Brand</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{url_for('about_page')}}">About</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2">
-                    <h5 class="text-white">More</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">FAQ's</a></li>
-                        <li><a href="#">Privacy & Policy</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4">
-                    <h5 class="text-white">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li>Address: Guzelyurt North Cyprus</li>
-                        <li><a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox">Email: hnengare@gmail.com</a>
-                        </li>
-                        <li><a href="#+90 533 850 2322">Phone: +90 533 850 2322</a></li>
-                    </ul>
-                </div>
+
+
             </div>
         </div>
     </div>
-    <div class="footer-bottom py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">© 2022 copyright all rights reserved | Designed by <small class="text-primary">hilsCYBER
-                        inc.</small>
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <div class="social-icons">
-                        <a href="#"><i class='bx bxl-facebook'></i></a>
-                        <a href="#"><i class='bx bxl-twitter'></i></a>
-                        <a href="#"><i class='bx bxl-instagram-alt'></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-
+</div>
 {%endblock content%}

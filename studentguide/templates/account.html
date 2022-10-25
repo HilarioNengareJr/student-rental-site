@@ -69,7 +69,7 @@ body {
     <div class="row mb-5">
         <div class="col-md-8 mx-auto text-center">
             <h6 class="text-primary">ACCOUNT</h6>
-            <h1>Update Account</h1>
+            <h1><span id="typed6"></span></h1>
             <p>
                 Click inside the white dropzone and select files you wish to upload.<br>Please comply with website rules
                 or you
@@ -147,5 +147,18 @@ body {
     </small>
     <div class="some-space"></div>
 </div>
+
+<script>
+//typed.js
+    new Typed('#typed6',{
+        strings : ['Update your Account Info.'],
+        typeSpeed : 50,
+        delaySpeed : 10,
+        loop : false,
+        showCursor: false
+});
+
+
+</script>
 
 {% endblock content %}

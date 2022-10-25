@@ -82,7 +82,7 @@
                                 class='bx bx-home-circle'></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="font-size:25px;"><i class='bx bx-compass'></i></a>
+                        <a class="nav-link" href="{{ url_for('browse')}}" style="font-size:25px;"><i class='bx bx-compass'></i></a>
                     </li>
                     {% if not current_user.is_authenticated%}
                     <li><a class="nav-link" href="{{url_for('about_page')}}" style="font-size:25px;"><i
@@ -124,10 +124,6 @@
         margin:auto;
         margin-bottom:45px;
     }
-
-
-
-
 </style>
 
 
@@ -137,7 +133,7 @@
 <!--Custom Animations from JS-->
 <script>
 // ScrollReveal is a JavaScript library for easily animating elements as they enter/leave the viewport.
-//    ScrollReveal().reveal('.scroll-review',{ delay: 250});
+ScrollReveal().reveal('.scroll-review',{ delay: 250});
 
 //typed.js
     new Typed('#typed',{

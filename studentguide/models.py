@@ -1,6 +1,7 @@
 from studentguide import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
+from sqlalchemy.dialects.postgresql import JSON
 
 
 @login_manager.user_loader
@@ -27,6 +28,7 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    image_folder = db.Column(JSON, nullable=False)
     location = db.Column(db.String(200))
     city = db.Column(db.String(200))
     phone_number = db.Column(db.String(10), nullable=False)
@@ -38,7 +40,7 @@ class Post(db.Model):
     # likes = db.relationship('Like', backref='post', lazy='dynamic')
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '{}'.format(self.image_folder)
 
 #
 # class Comment(db.Model):
