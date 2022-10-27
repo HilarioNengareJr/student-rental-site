@@ -57,7 +57,7 @@ class LikeForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    file = FileField('File')
+    image_folder = FileField('file')
     whatsapp = StringField('Whatsapp',
                            validators=[DataRequired(), Length(min=10, max=14)],
                            render_kw={"Placeholder": "0533 ___ ____"})

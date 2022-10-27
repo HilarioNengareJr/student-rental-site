@@ -28,7 +28,7 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image_folder = db.Column(JSON, nullable=False)
+    image_folder = db.Column(db.String, nullable=False)
     location = db.Column(db.String(200))
     city = db.Column(db.String(200))
     phone_number = db.Column(db.String(10), nullable=False)

@@ -87,15 +87,14 @@ hr{
     <div class="media-body">
         <br>
         <div>
-            <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d') }} by {{ post.author.username
-                }}</small>
+            <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d') }} by {{ post.author.username}}</small>
         </div>
         <br>
         <h5> House Images </h5>
         <hr>
         <div class="mt-3">
-            {% for file_url in file_urls %}
-            <img class="mt-3" src="{{ url_for('static', filename='uploads/' + filename) }}"
+            {% for file_url in urls %}
+            <img class="mt-3" src="{{ url_for('static', filename='uploads/' + file_url) }}"
                  style="margin-left: 15px; max-width: 240px; min-height:120px;">
             {% endfor %}
         </div>
