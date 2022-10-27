@@ -84,6 +84,7 @@ file_urls = []
 def upload_file():
     form = PostForm()
     global file_urls
+
     for uploaded_file in request.files.getlist('file'):
         filename = secure_filename(uploaded_file.filename)
         if filename != '':
