@@ -1,7 +1,7 @@
 # StudentRenting.com
-A student guide site, its meant to offer easy access to house hunting, networking, travelling and other everyday student needs.
+is a site catering for student accommodation needs, its meant to offer easy access to house hunting online insead of physical effort.
 
-sample of what the site will be after finishing it.
+Have a peek,
 
 Home Page:
 
@@ -15,6 +15,12 @@ Upload Page
 ![image](https://user-images.githubusercontent.com/38634516/197796071-6175ea7f-f291-4ad4-a25e-8576ffc26b7a.png)
 
 ![image](https://user-images.githubusercontent.com/38634516/197796155-8ebb5b7e-4383-4b53-8b7a-63f20425fa26.png)
+
+Post Route after Uploading
+![image](https://user-images.githubusercontent.com/38634516/198586219-a229eb64-2d94-4d74-bb4e-bfb91f15893b.png)
+
+![image](https://user-images.githubusercontent.com/38634516/198586300-0724be8c-0767-424c-9221-248f07ec23f5.png)
+
 
 
 User Account Page
@@ -32,3 +38,11 @@ Registration Page
 Log In Page
 
 ![image](https://user-images.githubusercontent.com/38634516/197796786-b9a2293e-c1a7-483d-9394-042459730fc8.png)
+
+Left to do:
+-add viewed, likes and commenting
+-query posts from database
+-pagination
+-blueprints
+-switching to Postgres
+-deployment
