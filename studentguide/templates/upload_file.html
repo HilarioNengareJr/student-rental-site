@@ -20,10 +20,6 @@
     font-size:20px;
 }
 
-.row {
-	margin-top: 90px;
-}
-
 .containerl {
 	width: 100%;
 	margin: auto;
@@ -31,11 +27,6 @@
 
 .img{
     box-shadow:0 8px 22px rgba(0,0,0,0.2);
-}
-
-.containerl {
-	width: 100%;
-	margin: auto;
 }
 
 .outtacont,
@@ -75,7 +66,6 @@ textarea {
 
 label {
    cursor: pointer;
-   /* Style as you please, it will become the visible UI component. */
 }
 
 label:hover{
@@ -96,16 +86,19 @@ hr{
     color: #0087F7 !important;
 }
 
+.description{
+ height:200px;
+]
+
 </style>
 
 <div class="containerl">
-    <div class="row mb-5">
+    <div class="mt-5">
         <div class="col-md-8 mx-auto text-center">
             <h6 class="text-primary">ADD POST</h6>
             <h1><span id="typed2"></span></h1>
             <p class="text-success">
-                Click inside the box to add photos or simply drag selected files you wish to upload.<br>Scroll to add rental details. Please comply with website rules
-                or you
+                Click inside the box to add photos or simply drag selected files you wish to upload.<br>Scroll to add rental details. Please comply with website rules, or you
                 will
                 be banned!
             </p>
@@ -113,8 +106,7 @@ hr{
     </div>
 
 <div class="d-flex justify-content-center">
-    <form action="{{ url_for('upload_file') }}" class="dropzone dropzone-card">
-    </form>
+    {{ dropzone.create(action='upload_file') }}
 </div>
     <hr>
     <div class="outtacont">
@@ -185,19 +177,18 @@ hr{
                         {% if form.description.errors %}
                         {{ form.description(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            <!--                        add number etc and edit css-->
                             {% for error in form.description.errors %}
                             <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                         {% else %}
-                        {{ form.description(class="form-control form-control-lg text-success") }}
+                        {{ form.description(class="description form-control form-control-lg text-success") }}
                         {% endif %}
                     </div>
                 </fieldset>
 
                 <div class="form-group d-flex justify-content-center">
-                    {{ form.submit(class="btn btno btn-outline-info") }}
+                    {{ form.submit(class="btn btno btn-outline-info", id="upload-btn") }}
                 </div>
             </form>
         </div>
@@ -210,6 +201,7 @@ hr{
     </small>
 </div>
 
+
 <script>
 //typed.js
     new Typed('#typed2',{
@@ -217,9 +209,8 @@ hr{
         typeSpeed : 50,
         delaySpeed : 10,
         loop : false,
-        showCursor: false
+        showCursor: false,
 });
-
 
 </script>
 {% endblock content %}

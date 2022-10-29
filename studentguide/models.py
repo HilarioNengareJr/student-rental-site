@@ -28,19 +28,19 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image_folder = db.Column(db.String, nullable=False)
+    image_folder = db.Column(db.String(200), nullable=False)
     location = db.Column(db.String(200))
     city = db.Column(db.String(200))
     phone_number = db.Column(db.String(10), nullable=False)
     whatsapp = db.Column(db.String(10), nullable=False)
-    description = db.Column(db.String(140))
+    description = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # comments = db.relationship('Comment', backref='post', lazy='dynamic')
     # likes = db.relationship('Like', backref='post', lazy='dynamic')
 
     def __repr__(self):
-        return '{}'.format(self.image_folder)
+        return '{}'.format(self.id)
 
 #
 # class Comment(db.Model):

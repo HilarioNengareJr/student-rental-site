@@ -12,7 +12,6 @@ def convert_to_str(a_list):
     temp = " "
     return temp.join(a_list)
 
-
 @app.errorhandler(413)
 def too_large(e):
     return "File is too large", 413
@@ -84,52 +83,46 @@ file_urls = []
 def upload_file():
     form = PostForm()
     global file_urls
+    # set session for image results
+    if "file_urls" not in session:
+        session['file_urls'] = []
+    file_urls = session['file_urls']
+    if request.method == 'POST':
+        for uploaded_file in request.files.getlist('file'):
+            filename = secure_filename(uploaded_file.filename)
+            if filename != '':
+                file_ext = os.path.splitext(filename)[1]
+                if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+                    return "Invalid Image", 400
+                uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+                file_urls.append(filename)
+        session['file_urls'] = file_urls
+        print(file_urls)
 
-    for uploaded_file in request.files.getlist('file'):
-        filename = secure_filename(uploaded_file.filename)
-        if filename != '':
-            file_ext = os.path.splitext(filename)[1]
-            if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-                return "Invalid Image", 400
-            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-            file_urls.append(filename)
+        if form.validate_on_submit():
+            _post = Post(image_folder=str(file_urls), location=form.location.data,
+                         phone_number=form.phonenum.data,
+                         whatsapp=form.whatsapp.data,
+                         city=form.city.data, description=form.description.data,
+                         author=current_user)
+            db.session.add(_post)
+            db.session.commit()
 
-    if form.validate_on_submit():
-        _post = Post(image_folder=str(file_urls), location=form.location.data,
-                     phone_number=form.phonenum.data,
-                     whatsapp=form.whatsapp.data,
-                     city=form.city.data, description=form.description.data,
-                     author=current_user)
-        db.session.add(_post)
-        db.session.commit()
-
-        return redirect(url_for('post', post_id=_post.id))
+            return redirect(url_for('home'))
 
     return render_template('upload_file.html', title="Upload", form=form)
-
-
-#  The uploads are saved to a directory outside the static folder, this route is used to serve them.
-@app.route('/uploads/<filename>')
-def upload(filename):
-    return send_from_directory(app.config['UPLOAD_PATH'], filename)
-
-
-urls = []
 
 
 @app.route('/post/<int:post_id>')
 def post(post_id):
     _post = Post.query.get_or_404(post_id)
-    global urls
-    urls += eval(_post.image_folder)
-    print(urls)
-    return render_template('post.html', title="Post", post=_post, urls=urls)
+    session.pop('file_urls', None)
+    return render_template('post.html', title="Post", post=_post, urls=eval(_post.image_folder))
 
 
 @app.route("/browse", methods=['GET', 'POST'])
 def browse():
     posts = Post.query.order_by(Post.timestamp.desc())
-
     return render_template('browse.html', title="Browse For Home", posts=posts)
 
 
