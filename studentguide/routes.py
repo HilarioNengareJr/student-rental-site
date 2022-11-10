@@ -1,16 +1,19 @@
 import os
-from studentguide import app, bcrypt, db
-from werkzeug.utils import secure_filename
-from flask import render_template, flash, redirect, url_for, request, send_from_directory, session, abort
-from studentguide.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm
-from studentguide.models import User, Post
+
+from flask import render_template, flash, redirect, url_for, request, session, abort
 from flask_login import current_user, logout_user, login_user, login_required
+from werkzeug.utils import secure_filename
+
+from studentguide import app, bcrypt, db
+from studentguide.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, CommentForm
+from studentguide.models import User, Post, Comment
 from studentguide.utilities import save_picture
 
 
 def convert_to_str(a_list):
     temp = " "
     return temp.join(a_list)
+
 
 @app.errorhandler(413)
 def too_large(e):
@@ -115,9 +118,19 @@ def upload_file():
 
 @app.route('/post/<int:post_id>')
 def post(post_id):
+    form = CommentForm()
     _post = Post.query.get_or_404(post_id)
+    comments = Comment.query.filter_by(post_id=_post.id).order_by(Comment.timestamp.desc())
     session.pop('file_urls', None)
-    return render_template('post.html', title="Post", post=_post, urls=eval(_post.image_folder))
+    if form.validate_on_submit():
+        comment = Comment(body=form.comment.data, post=_post, author=current_user)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been added!')
+
+        return redirect(url_for('post', post_id=post.id))
+
+    return render_template('post.html', title="Post", post=_post, urls=eval(_post.image_folder), comments=comments)
 
 
 @app.route("/browse", methods=['GET', 'POST'])

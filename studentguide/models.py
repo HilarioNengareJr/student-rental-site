@@ -1,7 +1,8 @@
-from studentguide import db, login_manager
-from flask_login import UserMixin
 from datetime import datetime
-from sqlalchemy.dialects.postgresql import JSON
+
+from flask_login import UserMixin
+
+from studentguide import db, login_manager
 
 
 @login_manager.user_loader
@@ -36,24 +37,25 @@ class Post(db.Model):
     description = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    comments = db.relationship('Comment', backref='post', lazy='dynamic')
+
     # likes = db.relationship('Like', backref='post', lazy='dynamic')
 
     def __repr__(self):
         return '{}'.format(self.id)
 
-#
-# class Comment(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     body = db.Column(db.String(140))
-#     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-#     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-#     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-#
-#     def __repr__(self):
-#         return '<Comment {}>'.format(self.body)
-#
-#
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+    def __repr__(self):
+        return '<Comment {}>'.format(self.body)
+
+
 # class Like(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

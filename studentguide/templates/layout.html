@@ -77,46 +77,45 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="nav-icons ms-auto">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('home')}}" style="font-size:25px;"><i
-                                class='bx bx-home-circle'></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('browse')}}" style="font-size:25px;"><i class='bx bx-compass'></i></a>
-                    </li>
-                    {% if not current_user.is_authenticated%}
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('browse')}}">BROWSE</a>
+                </li>
+                {% if not current_user.is_authenticated%}
+                <div class="nav-icons">
                     <li><a class="nav-link" href="{{url_for('about_page')}}" style="font-size:25px;"><i
                             class='bx bx-help-circle'></i></a></li>
-                    {% endif %}
-                </ul>
-            </div>
-            {%if current_user.is_authenticated%}
-            <!--Make the icon show-->
-            <div class="nav-icons">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item text-primary">
-                        <a class="nav-link" href="{{url_for('upload_file')}}" style="font-size:29px;"><i
-                                class='bx bx-cloud-upload'></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('account')}}" style="font-size:25px;"><i
-                                class='bx bx-user'></i></a>
-                    </li>
-                </ul>
-            </div>
-            <a href="{{ url_for('logout')}}">
-                <button class="btn btn-primary ms-lg-3">Log Out
-                </button>
-            </a>
-            {% else %}
-
-            <a href="{{ url_for('register') }}">
-                <button class="btn btn-primary ms-lg-3">Join Us</button>
-            </a>
-            {% endif %}
+                </div>
+                {% endif %}
+            </ul>
         </div>
+        {%if current_user.is_authenticated%}
+        <!--Make the icon show-->
+        <ul class="navbar-nav ms-auto">
+            <div class="nav-icons">
+                <li class="nav-item text-primary">
+                    <a class="nav-link" href="{{url_for('upload_file')}}" style="font-size:29px;"><i
+                            class='bx bx-cloud-upload'></i></a>
+                </li>
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('account')}}">ACCOUNT</a>
+            </li>
+        </ul>
+
+        <a href="{{ url_for('logout')}}">
+            <button class="btn btn-primary ms-lg-3">Log Out
+            </button>
+        </a>
+        {% else %}
+
+        <a href="{{ url_for('register') }}">
+            <button class="btn btn-primary ms-lg-3">Join Us</button>
+        </a>
+        {% endif %}
     </div>
 </nav>
 
@@ -126,6 +125,7 @@
         margin:auto;
         margin-bottom:45px;
     }
+
 </style>
 
 
@@ -136,11 +136,13 @@
 <script>
 // ScrollReveal is a JavaScript library for easily animating elements as they enter/leave the viewport.
 ScrollReveal().reveal('.scroll-review',{ delay: 250});
+
 </script>
 
 {{ dropzone.load_js() }}
-{{ dropzone.config(custom_init='dz = this;document.getElementById("upload-btn").addEventListener("click", function handler(e) {dz.processQueue();});',
-                 custom_options='autoProcessQueue: false, addRemoveLinks: true, parallelUploads: 20,') }}
+{{ dropzone.config(custom_init='dz = this;document.getElementById("upload-btn").addEventListener("click", function
+handler(e) {dz.processQueue();});',
+custom_options='autoProcessQueue: false, addRemoveLinks: true, parallelUploads: 20,') }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
 <script src="https://anijs.github.io/lib/anijs/anijs.js"></script>
 <script src="https://anijs.github.io/lib/anijs/helpers/dom/anijs-helper-dom.js"></script>

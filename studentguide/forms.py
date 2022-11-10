@@ -1,9 +1,9 @@
-import phonenumbers
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, FormField
-from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp
 from flask_login import current_user
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+
 from studentguide.models import User
 
 
@@ -20,7 +20,7 @@ class LoginForm(FlaskForm):
     email = StringField('Email ', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember me ')
-    submit = SubmitField('Cool ')
+    submit = SubmitField('Log In ')
 
 
 class UpdateAccountForm(FlaskForm):
@@ -46,12 +46,6 @@ class UpdateAccountForm(FlaskForm):
 
 class CommentForm(FlaskForm):
     comment = TextAreaField('comment', validators=[
-        DataRequired(), Length(min=1, max=140)], render_kw={"placeholder": "Write a Comment"})
-    submit = SubmitField('Submit')
-
-
-class LikeForm(FlaskForm):
-    like = TextAreaField('comment', validators=[
         DataRequired(), Length(min=1, max=140)], render_kw={"placeholder": "Write a Comment"})
     submit = SubmitField('Submit')
 
