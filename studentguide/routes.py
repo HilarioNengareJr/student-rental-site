@@ -15,6 +15,17 @@ def convert_to_str(a_list):
     return temp.join(a_list)
 
 
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500
+
+
 @app.errorhandler(413)
 def too_large(e):
     return "File is too large", 413
@@ -22,6 +33,7 @@ def too_large(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    page = request.args.get('page', 1, type=int)
     return render_template("home.html", title="Home Page")
 
 
@@ -111,12 +123,12 @@ def upload_file():
             db.session.add(_post)
             db.session.commit()
 
-            return redirect(url_for('home'))
+            return redirect(url_for('browse'))
 
     return render_template('upload_file.html', title="Upload", form=form)
 
 
-@app.route('/post/<int:post_id>')
+@app.route('/post/<int:post_id>', methods=['POST', 'GET'])
 def post(post_id):
     form = CommentForm()
     _post = Post.query.get_or_404(post_id)
@@ -128,15 +140,23 @@ def post(post_id):
         db.session.commit()
         flash('Your comment has been added!')
 
-        return redirect(url_for('post', post_id=post.id))
+        return redirect(url_for('post', post_id=_post.id))
 
-    return render_template('post.html', title="Post", post=_post, urls=eval(_post.image_folder), comments=comments)
+    return render_template('post.html', title="Post", post=_post, urls=eval(_post.image_folder), comments=comments,
+                           form=form)
 
 
 @app.route("/browse", methods=['GET', 'POST'])
 def browse():
-    posts = Post.query.order_by(Post.timestamp.desc())
-    return render_template('browse.html', title="Browse For Home", posts=posts)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5,
+                                                                error_out=False)
+    next_url = url_for('browse', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('browse', page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template('browse.html', title="Browse For Home", posts=posts.items, next_url=next_url,
+                           prev_url=prev_url)
 
 
 @app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])

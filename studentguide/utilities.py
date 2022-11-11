@@ -1,8 +1,11 @@
-from studentguide import app
-import os
-from PIL import Image
-import secrets
 import imghdr
+import os
+import secrets
+
+from PIL import Image
+
+from studentguide import app
+
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)

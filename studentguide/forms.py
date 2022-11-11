@@ -45,9 +45,8 @@ class UpdateAccountForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField('comment', validators=[
-        DataRequired(), Length(min=1, max=140)], render_kw={"placeholder": "Write a Comment"})
-    submit = SubmitField('Submit')
+    comment = TextAreaField('comment', validators=[DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Comment')
 
 
 class PostForm(FlaskForm):

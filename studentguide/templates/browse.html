@@ -18,6 +18,9 @@
 
 
 
+
+
+
 </style>
 <div class="mt-5 mb-5">
     <div class="col-md-8 mx-auto text-center">
@@ -86,9 +89,17 @@
         </a>
     </div>
 </article>
-
 {% endfor %}
 
+<div class="arrows d-flex justify-content-center">
+    {% if next_url %}
+    <a href="{{ next_url }}" style="font-size:25px;"><i class='bx bxs-left-arrow'></i></a>
+    {% endif %}
+    <div class="m-3"></div>
+    {% if prev_url %}
+    <a href="{{ prev_url }}" style="font-size:25px;"><i class='bx bxs-right-arrow'></i></a>
+    {% endif %}
+</div>
 <div class="mt-5 mb-5" style="text-align:center;">
     <small>
         Designed by <small class="text-primary">hilsCYBER inc.</small>
@@ -104,6 +115,9 @@
         loop : false,
         showCursor: false
 });
+
+
+
 
 
 

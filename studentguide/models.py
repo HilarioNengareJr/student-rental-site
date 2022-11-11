@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(128))
     profile_image = db.Column(db.String(20), default='default.jpg')
     posts = db.relationship('Post', backref='author', lazy=True)
+    comments = db.relationship('Comment', backref='author', lazy='dynamic')
 
     def set_username(self, first_name, last_name):
         self.username = first_name + " " + last_name

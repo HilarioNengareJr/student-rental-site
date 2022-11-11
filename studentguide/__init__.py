@@ -1,16 +1,14 @@
-import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_dropzone import Dropzone
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 dropzone = Dropzone(app)
 
 app.config['SECRET_KEY'] = 'Sick Rat'
-
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.png', '.jpg', '.jpeg', '.gif']
 app.config['DROPZONE_UPLOAD_MULTIPLE'] = True

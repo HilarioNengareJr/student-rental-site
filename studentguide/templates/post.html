@@ -15,6 +15,12 @@ form {
 	margin-bottom: 45px;
 }
 
+.fixed{
+    background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+    box-shadow:var(--box-shadow);
+    height: 40%;
+}
+
 .post-metadata{
     margin-right:75%;
 }
@@ -29,6 +35,15 @@ form {
     margin:auto;
 }
 
+.comment-card{
+    box-shadow:var(--box-shadow);
+    border-radius:30px;
+}
+
+.comment-body{
+    width:85%;
+    margin:auto;
+}
 
 hr{
     border-color: var(--primary);
@@ -46,12 +61,33 @@ hr{
 	justify-content: center;
 }
 
-.delete-edit{
-
+.sizediv{
+    height:450px;
 }
+
+
+.item1{
+    width:20%;
+}
+
+
+.carousel-control-prev-icon {
+ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230d6efd' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230d6efd' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+
+
+
+
+
+
+
 </style>
 
-{% if current_user.is_authenticated %}
+{% if post.author == current_user %}
 <div class="mt-5 mb-5">
     <div class="col-md-8 mx-auto text-center">
         <h6 class="text-primary">POST</h6>
@@ -83,39 +119,109 @@ hr{
     <div class="media-body">
         <br>
         <div>
-            <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d') }} by {{ post.author.username}}</small>
+            <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d') }} by {{
+                post.author.username}}</small>
         </div>
         <br>
         <h5> House Images </h5>
         <hr>
-        <div class="mt-3">
-            {% for file_url in urls %}
-            <img class="mt-3" src="{{ url_for('static', filename='uploads/' + file_url) }}"
-                 style="margin-left: 15px; max-width: 240px; min-height:120px;">
-            {% endfor %}
+        <div class="carousel slide" data-bs-ride="carousel" id="carouselExampleControls">
+            <div class="carousel-inner sizediv">
+                {% for file_url in urls %}
+                <div class="carousel-item active text-center">
+                    <img alt="..." class="d-block w-100"
+                         src="{{ url_for('static', filename='uploads/' + file_url) }}"
+                         style="height:95%;">
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" data-bs-slide="prev" data-bs-target="#carouselExampleControls"
+                    type="button">
+                <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#carouselExampleControls"
+                    type="button">
+                <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
         <hr>
 
         <div class="article-metadata d-flex justify-content-between text-success">
-            <small>
+            <address>
                 <i class='bx bx-current-location'></i> {{ post.location }}
-            </small>
-            <small>
+            </address>
+            <a>
                 <i class='bx bxl-whatsapp'></i> {{ post.whatsapp }}
-            </small>
-            <small>
+            </a>
+            <a>
                 <i class='bx bxs-phone-incoming'></i> {{ post.phone_number }}
-            </small>
-            <small>
+            </a>
+            <a>
                 <i class='bx bxs-city'></i> {{ post.city }}
-            </small>
+            </a>
         </div>
         <br>
         <h5> About House </h5>
         <div class="description-wrapper text-success">
             <blockquote class="article-content">{{ post.description }}</blockquote>
         </div>
-        <br>
+        {% if current_user.is_authenticated %}
+        <hr>
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="form-group">
+                        {% if form.comment.errors %}
+                        {{ form.comment(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.comment.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.comment(class="form-control form-control-lg comment") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group d-flex justify-content-center mt-3">
+                        {{ form.submit(class="btn btn-outline-success") }}
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% else %}
+        <div class="m-5">
+            <small><a href="{{url_for('login')}}">Log in to add a comment...</a></small>
+        </div>
+        {% endif %}
+        <div class="mr-5 mb-5 mt-5">
+            <h5>
+                Comments
+            </h5>
+        </div>
+        {% for comment in comments %}
+        <div class="comment-card">
+            <a class="pull-left" href="#"> <img class="rounded-circle article-img"
+                                                src="{{ url_for('static', filename='profile_pics/' + comment.author.profile_image) }}"></a>
+            <div class="mr-auto p-2 text-muted">
+                <small class="media-heading">{{ comment.author.username }} commented on {{
+                    comment.timestamp.strftime('%d-%m-%Y') }}
+                </small>
+            </div>
+            <div class="comment-body text-success">
+                <small>
+                    <p>
+                        {{ comment.body }}
+                    </p>
+                </small>
+            </div>
+        </div>
+        {% endfor %}
         {% if post.author == current_user %}
         <div class="delete-edit d-flex justify-content-end">
             <a class="btn btn-outline-secondary btn-sm mt-1 mb-1"
@@ -154,6 +260,7 @@ hr{
         Designed by <small class="text-primary">hilsCYBER inc.</small>
     </small>
 </div>
+
 <script>
 //typed.js
     new Typed('#typed3',{
@@ -164,13 +271,35 @@ hr{
         showCursor: false
 });
 
+
+
+
+
+
+</script>
+
+<script>
+
     new Typed('#typed4',{
-        strings : ['Please Like and Comment.'],
+        strings : ['Like and Comment.'],
         typeSpeed : 70,
         delaySpeed : 10,
         loop : false,
         showCursor: false
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </script>
