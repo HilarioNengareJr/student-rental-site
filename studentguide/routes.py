@@ -2,12 +2,21 @@ import os
 
 from flask import render_template, flash, redirect, url_for, request, session, abort
 from flask_login import current_user, logout_user, login_user, login_required
+from flask_mail import Message
+from jinja2 import pass_context, Template
+from markupsafe import Markup
 from werkzeug.utils import secure_filename
 
-from studentguide import app, bcrypt, db
-from studentguide.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, CommentForm
+from studentguide import app, bcrypt, db, mail
+from studentguide.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, CommentForm, RequestResetForm, \
+    ResetPasswordForm
 from studentguide.models import User, Post, Comment
 from studentguide.utilities import save_picture
+
+
+@pass_context
+def eval_fn(context, value):
+    return Markup(Template(value).render(context)).render()
 
 
 def convert_to_str(a_list):
@@ -112,7 +121,6 @@ def upload_file():
                 uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
                 file_urls.append(filename)
         session['file_urls'] = file_urls
-        print(file_urls)
 
         if form.validate_on_submit():
             _post = Post(image_folder=str(file_urls), location=form.location.data,
@@ -146,11 +154,14 @@ def post(post_id):
                            form=form)
 
 
+
 @app.route("/browse", methods=['GET', 'POST'])
 def browse():
     page = request.args.get('page', 1, type=int)
+
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5,
                                                                 error_out=False)
+
     next_url = url_for('browse', page=posts.next_num) \
         if posts.has_next else None
     prev_url = url_for('browse', page=posts.prev_num) \
@@ -181,6 +192,50 @@ def update_post(post_id):
         form.city.data = _post.city
     return render_template('upload_file.html', title='Update Post',
                            form=form, legend='Update Post')
+
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Password Reset Request',
+                  sender=app.config['MAIL_USERNAME'],
+                  recipients=[user.email])
+    msg.body = f'''To reset your password, visit the following link:
+{url_for('reset_token', token=token, _external=True)}
+If you did not make this request then simply ignore this email and no changes will be made.
+'''
+    mail.send(msg)
+
+
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash('An email has been sent with instructions to reset your password.', 'info')
+        return redirect(url_for('login'))
+
+    return render_template('reset_request.html', title='Reset Password', form=form)
+
+
+@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Your password has been updated! You are now able to log in', 'success')
+        return redirect(url_for('login'))
+    return render_template('reset_token.html', title='Reset Password', form=form)
 
 
 @app.route("/post/<int:post_id>/delete", methods=['POST'])

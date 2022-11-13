@@ -3,6 +3,7 @@ from flask_bcrypt import Bcrypt
 from flask_bootstrap import Bootstrap
 from flask_dropzone import Dropzone
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -23,8 +24,21 @@ bootstrap = Bootstrap(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
-
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = '___@gmail.com'  # come back to email reset password
+app.config['MAIL_PASSWORD'] = ''
+mail = Mail(app)
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
+
+
+def make_list(_var):
+    return eval(_var)
+
+
+app.jinja_env.globals.update(make_list=make_list)
 
 from studentguide import routes

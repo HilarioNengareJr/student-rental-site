@@ -6,6 +6,7 @@
         width:75%;
         margin:auto;
         box-shadow: var(--box-shadow);
+        border-radius: 50px 0px;
     }
 
     .so-nice{
@@ -17,7 +18,23 @@
     }
 
 
+.sizediv{
+    height:450px;
+}
 
+
+.item1{
+    width:20%;
+}
+
+
+.carousel-control-prev-icon {
+ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230d6efd' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230d6efd' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
 
 
 
@@ -31,33 +48,49 @@
         </p>
     </div>
 </div>
+<div class="scroll-review">
+    {% for post in posts %}
 
-{% for post in posts %}
-
-<article class="rounded-end mt-5 mb-5 scroll-review">
-    <div class="so-nice">
-        <div class="ml-2 mb-3">
-
-        </div>
-        <br>
-        <img class="rounded-circle article-img"
-             src="{{ url_for('static', filename='profile_pics/' + post.author.profile_image) }}">
-        <div class="media-body">
-            <br>
-            <div>
-                <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d') }} by {{ post.author.username
-                    }}
-                </small>
-            </div>
+    <article class="rounded-end mt-5 mb-5">
+        <div class="so-nice">
+            <div class="media-body">
+                <div>
+                    <img class="rounded-circle article-img"
+                         src="{{ url_for('static', filename='profile_pics/' + post.author.profile_image) }}">
+                    <small class="text-muted">Posted on <a class="text-primary">{{ post.timestamp.strftime('%d-%m-%Y')
+                        }}</a> at <a class="text-primary">{{post.timestamp.strftime('%H:%M')}}</a> by {{
+                        post.author.username
+                        }}
+                    </small>
+                </div>
             <br>
             <h5> House Images </h5>
             <hr>
-            <div class="mt-3">
-                {% for file_url in urls %}
-                <img class="mt-3" src="{{ url_for('static', filename='uploads/' + file_url) }}"
-                     style="margin-left: 15px; max-width: 240px; min-height:120px;">
-                {% endfor %}
-            </div>
+                <div class="mt-3">
+                    <div class="carousel slide" data-bs-ride="carousel" id="carouselExampleControls">
+                        <div class="carousel-inner sizediv">
+                            {% for file_url in make_list(post.image_folder) %}
+                            <div class="carousel-item active text-center">
+                                <img alt="a picture" class="d-block w-100"
+                                     src="{{ url_for('static', filename='uploads/' + file_url) }}"
+                                     style="height:95%;">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" data-bs-slide="prev"
+                                data-bs-target="#carouselExampleControls"
+                                type="button">
+                            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" data-bs-slide="next"
+                                data-bs-target="#carouselExampleControls"
+                                type="button">
+                            <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
             <hr>
 
             <div class="article-metadata d-flex justify-content-between text-success">
@@ -80,25 +113,27 @@
                 <blockquote class="article-content">{{ post.description }}</blockquote>
             </div>
         </div>
-    </div>
-    <div class="d-flex justify-content-center">
-        <a href="{{ url_for('post', post_id=post.id)}}">
-            <button class="btn btno btn-outline-success mb-5">
-                VIEW
-            </button>
-        </a>
-    </div>
-</article>
-{% endfor %}
-
-<div class="arrows d-flex justify-content-center">
-    {% if next_url %}
-    <a href="{{ next_url }}" style="font-size:25px;"><i class='bx bxs-left-arrow'></i></a>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="{{ url_for('post', post_id=post.id)}}">
+                <button class="btn btno btn-outline-success mb-5">
+                    VIEW
+                </button>
+            </a>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+<div class="arrows d-flex justify-content-center text-success">
+    {% if prev_url %}
+    <a href="{{ prev_url }}" style="font-size:25px; color:var(--primary);"><i class='bx bxs-left-arrow'></i></a>
     {% endif %}
     <div class="m-3"></div>
-    {% if prev_url %}
-    <a href="{{ prev_url }}" style="font-size:25px;"><i class='bx bxs-right-arrow'></i></a>
+    {% if next_url %}
+    <a href="{{ next_url }}" style="font-size:25px; color: var(--primary)"><i class='bx bxs-right-arrow'></i></a>
     {% endif %}
+
+
 </div>
 <div class="mt-5 mb-5" style="text-align:center;">
     <small>
@@ -115,6 +150,8 @@
         loop : false,
         showCursor: false
 });
+
+
 
 
 

@@ -1,8 +1,10 @@
 from datetime import datetime
 
+import jwt  # json web token
 from flask_login import UserMixin
+from itsdangerous import URLSafeTimedSerializer as Serializer
 
-from studentguide import db, login_manager
+from studentguide import db, login_manager, app
 
 
 @login_manager.user_loader
@@ -21,11 +23,23 @@ class User(UserMixin, db.Model):
     posts = db.relationship('Post', backref='author', lazy=True)
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
 
-    def set_username(self, first_name, last_name):
-        self.username = first_name + " " + last_name
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        # return s.dumps().decode('utf-8')
+        return jwt.encode({'user_id': self.id}, app.config['SECRET_KEY'], algorithm='HS256')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            # user_id = s.loads(token)['user_id']
+            user_id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
+        except:
+            return None
+        return User.query.get(user_id)
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
 class Post(db.Model):

@@ -119,8 +119,12 @@ hr{
     <div class="media-body">
         <br>
         <div>
-            <small class="text-muted">Posted on {{ post.timestamp.strftime('%Y-%m-%d') }} by {{
-                post.author.username}}</small>
+            <small class="text-muted">
+                Posted on <a class="text-primary">{{ post.timestamp.strftime('%d-%m-%Y')
+                }}</a> at <a class="text-primary">{{post.timestamp.strftime('%H:%M')}}</a> by {{
+                post.author.username
+                }}
+            </small>
         </div>
         <br>
         <h5> House Images </h5>
