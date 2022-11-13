@@ -386,7 +386,7 @@ form input.form-control {
 form .form-control {
   border: none;
   background-color :rgba(0,0,0,0.1);
-  border-radius:50px 25px;
+  border-radius:50px;
   text-align: center;
 }
 

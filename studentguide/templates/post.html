@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
 <style>
-
 .containerl {
 	width: 100%;
 	margin: auto;
@@ -85,6 +84,14 @@ hr{
 
 
 
+
+
+
+
+
+
+
+
 </style>
 
 {% if post.author == current_user %}
@@ -151,8 +158,7 @@ hr{
             </button>
         </div>
         <hr>
-
-        <div class="article-metadata d-flex justify-content-between text-success">
+        <div class="article-metadata d-flex justify-content-between text-success p-3">
             <address>
                 <i class='bx bx-current-location'></i> {{ post.location }}
             </address>
@@ -166,13 +172,52 @@ hr{
                 <i class='bx bxs-city'></i> {{ post.city }}
             </a>
         </div>
-        <br>
+        <hr>
         <h5> About House </h5>
         <div class="description-wrapper text-success">
             <blockquote class="article-content">{{ post.description }}</blockquote>
         </div>
+        <h5 class="mt-3"> Statistics </h5>
+        <div class="likes d-flex justify-content-start m-5 ">
+            {% if current_user.has_liked_post(post) %}
+
+            <a href="{{ url_for('like_action', post_id=post.id, action='unlike') }}"
+               style="font-size:20px;"><i
+                    class='bx bx-dislike'></i>
+            </a>
+            <div class="m-2"></div>
+            <a href="{{ url_for('like_action', post_id=post.id, action='like') }}"
+               style="font-size:20px;"><i
+                    class='bx bxs-like'></i></a>
+            <div class="m-2"></div>
+            {{ post.likes.count() }} likes |
+            <div class="m-2"></div>
+            <a class="mr-2" style="font-size:20px;"><i class='bx bx-chat'></i> </a> {{ post.comments.count() }} comments
+
+            {% else %}
+
+            <a href="{{ url_for('like_action', post_id=post.id, action='like') }}"
+               style="font-size:20px;"><i
+                    class='bx bxs-dislike'></i>
+            </a>
+            <div class="m-2"></div>
+            <a href="{{ url_for('like_action', post_id=post.id, action='like') }}"
+               style="font-size:20px;"><i class='bx bx-like'></i>
+            </a>
+            <div class="m-2"></div>
+            {{ post.likes.count() }} likes |
+            <div class="m-2"></div>
+            <a class="mr-2" style="font-size:20px;"><i class='bx bx-chat'></i> </a>
+            {{ post.comments.count() }} comments
+            {% endif %}
+        </div>
+
+        <div class="mr-5 mb-5 mt-5">
+            <h5>
+                Comments ({{ post.comments.count() }})
+            </h5>
+        </div>
         {% if current_user.is_authenticated %}
-        <hr>
         <form action="" method="POST">
             {{ form.hidden_tag() }}
 
@@ -203,18 +248,15 @@ hr{
             <small><a href="{{url_for('login')}}">Log in to add a comment...</a></small>
         </div>
         {% endif %}
-        <div class="mr-5 mb-5 mt-5">
-            <h5>
-                Comments
-            </h5>
-        </div>
         {% for comment in comments %}
         <div class="comment-card">
             <a class="pull-left" href="#"> <img class="rounded-circle article-img"
                                                 src="{{ url_for('static', filename='profile_pics/' + comment.author.profile_image) }}"></a>
             <div class="mr-auto p-2 text-muted">
-                <small class="media-heading">{{ comment.author.username }} commented on {{
-                    comment.timestamp.strftime('%d-%m-%Y') }}
+                <small class="media-heading">{{
+                    comment.author.username
+                    }} commented on <a class="text-primary">{{ comment.timestamp.strftime('%d-%m-%Y')
+                        }}</a> at <a class="text-primary">{{comment.timestamp.strftime('%H:%M')}}</a>
                 </small>
             </div>
             <div class="comment-body text-success">
@@ -226,15 +268,18 @@ hr{
             </div>
         </div>
         {% endfor %}
-        {% if post.author == current_user %}
-        <div class="delete-edit d-flex justify-content-end">
-            <a class="btn btn-outline-secondary btn-sm mt-1 mb-1"
-               href="#" style="font-size:25px;"><i class='bx bxs-edit'></i></a>
-            <button class="btn btn-outline-danger btn-sm m-1" data-target="#deleteModal" data-toggle="modal"
-                    style="font-size:25px;" type="button"><i class='bx bx-trash'></i>
-            </button>
+        <div class="row">
+            {% if post.author == current_user %}
+            <div class="delete-edit d-flex justify-content-end">
+                <a class="btn btn-outline-secondary btn-sm mt-1 mb-1"
+                   href="#" style="font-size:25px;"><i class='bx bxs-edit'></i></a>
+                <button class="btn btn-outline-danger btn-sm m-1" data-target="#deleteModal" data-toggle="modal"
+                        style="font-size:25px;" type="button"><i class='bx bx-trash'></i>
+                </button>
+            </div>
+
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 </article>
 <!-- Modal -->
@@ -250,7 +295,7 @@ hr{
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                <form action="#" method="POST">
+                <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
                     <input class="btn btn-danger" type="submit" value="Delete">
                 </form>
             </div>
@@ -280,6 +325,14 @@ hr{
 
 
 
+
+
+
+
+
+
+
+
 </script>
 
 <script>
@@ -291,6 +344,14 @@ hr{
         loop : false,
         showCursor: false
 });
+
+
+
+
+
+
+
+
 
 
 

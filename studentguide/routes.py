@@ -2,12 +2,12 @@ import os
 
 from flask import render_template, flash, redirect, url_for, request, session, abort
 from flask_login import current_user, logout_user, login_user, login_required
-from flask_mail import Message
 from jinja2 import pass_context, Template
 from markupsafe import Markup
 from werkzeug.utils import secure_filename
 
-from studentguide import app, bcrypt, db, mail
+from studentguide import app, bcrypt, db
+from studentguide.email import send_password_reset_email
 from studentguide.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, CommentForm, RequestResetForm, \
     ResetPasswordForm
 from studentguide.models import User, Post, Comment
@@ -104,6 +104,7 @@ file_urls = []
 
 
 @app.route('/post/new', methods=['POST', 'GET'])
+@login_required
 def upload_file():
     form = PostForm()
     global file_urls
@@ -154,7 +155,6 @@ def post(post_id):
                            form=form)
 
 
-
 @app.route("/browse", methods=['GET', 'POST'])
 def browse():
     page = request.args.get('page', 1, type=int)
@@ -194,48 +194,48 @@ def update_post(post_id):
                            form=form, legend='Update Post')
 
 
-def send_reset_email(user):
-    token = user.get_reset_token()
-    msg = Message('Password Reset Request',
-                  sender=app.config['MAIL_USERNAME'],
-                  recipients=[user.email])
-    msg.body = f'''To reset your password, visit the following link:
-{url_for('reset_token', token=token, _external=True)}
-If you did not make this request then simply ignore this email and no changes will be made.
-'''
-    mail.send(msg)
+@app.route('/like/<int:post_id>/<action>', methods=['GET', 'POST'])
+@login_required
+def like_action(post_id, action):
+    _post = Post.query.filter_by(id=post_id).first_or_404()
+    if action == 'like':
+        current_user.like_post(_post)
+        db.session.commit()
+    if action == 'unlike':
+        current_user.unlike_post(_post)
+        db.session.commit()
+    return redirect(request.referrer)
 
 
-@app.route("/reset_password", methods=['GET', 'POST'])
-def reset_request():
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        send_reset_email(user)
-        flash('An email has been sent with instructions to reset your password.', 'info')
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
         return redirect(url_for('login'))
+    return render_template('reset_request.html',
+                           title='Reset Password', form=form)
 
-    return render_template('reset_request.html', title='Reset Password', form=form)
 
-
-@app.route("/reset_password/<token>", methods=['GET', 'POST'])
-def reset_token(token):
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    user = User.verify_reset_token(token)
-    if user is None:
-        flash('That is an invalid or expired token', 'warning')
-        return redirect(url_for('reset_request'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('home'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user.password = hashed_password
+        user.set_password(form.password.data)
         db.session.commit()
-        flash('Your password has been updated! You are now able to log in', 'success')
+        flash('Your password has been reset.')
         return redirect(url_for('login'))
-    return render_template('reset_token.html', title='Reset Password', form=form)
+    return render_template('reset_token.html', form=form)
 
 
 @app.route("/post/<int:post_id>/delete", methods=['POST'])
@@ -256,6 +256,7 @@ def about_page():
 
 
 @app.route('/logout', methods=['GET', 'POST'])
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('home'))

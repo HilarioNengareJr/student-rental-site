@@ -1,8 +1,8 @@
 from datetime import datetime
+from time import time
 
 import jwt  # json web token
 from flask_login import UserMixin
-from itsdangerous import URLSafeTimedSerializer as Serializer
 
 from studentguide import db, login_manager, app
 
@@ -22,21 +22,33 @@ class User(UserMixin, db.Model):
     profile_image = db.Column(db.String(20), default='default.jpg')
     posts = db.relationship('Post', backref='author', lazy=True)
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    likes = db.relationship('Like', backref='author', lazy='dynamic')
 
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(app.config['SECRET_KEY'], expires_sec)
-        # return s.dumps().decode('utf-8')
-        return jwt.encode({'user_id': self.id}, app.config['SECRET_KEY'], algorithm='HS256')
+    def like_post(self, post):
+        if not self.has_liked_post(post):
+            like = Like(author_id=self.id, post_id=post.id)
+            db.session.add(like)
+
+    def unlike_post(self, post):
+        if self.has_liked_post(post):
+            Like.query.filter_by(author_id=self.id, post_id=post.id).delete()
+
+    def has_liked_post(self, post):
+        return Like.query.filter(Like.author_id == self.id, Like.post_id == post.id).count() > 0
+
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256')
 
     @staticmethod
-    def verify_reset_token(token):
-        s = Serializer(app.config['SECRET_KEY'])
+    def verify_reset_password_token(token):
         try:
-            # user_id = s.loads(token)['user_id']
-            user_id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
+            id = jwt.decode(token, app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
         except:
-            return None
-        return User.query.get(user_id)
+            return
+        return User.query.get(id)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -53,8 +65,7 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
-
-    # likes = db.relationship('Like', backref='post', lazy='dynamic')
+    likes = db.relationship('Like', backref='post', lazy='dynamic')
 
     def __repr__(self):
         return '{}'.format(self.id)
@@ -71,14 +82,14 @@ class Comment(db.Model):
         return '<Comment {}>'.format(self.body)
 
 
-# class Like(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-#     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-#     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-#
-#     def __repr__(self):
-#         return '<Like {}>'.format(self.body)
+class Like(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+    def __repr__(self):
+        return '<Like {}>'.format(self.body)
 
 
 def init_db():

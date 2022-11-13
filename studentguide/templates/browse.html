@@ -36,6 +36,9 @@
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230d6efd' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
 }
 
+.likes{
+ cursor:pointer;
+}
 
 
 </style>
@@ -63,9 +66,9 @@
                         }}
                     </small>
                 </div>
-            <br>
-            <h5> House Images </h5>
-            <hr>
+                <br>
+                <h5> House Images </h5>
+                <hr>
                 <div class="mt-3">
                     <div class="carousel slide" data-bs-ride="carousel" id="carouselExampleControls">
                         <div class="carousel-inner sizediv">
@@ -91,30 +94,68 @@
                         </button>
                     </div>
                 </div>
-            <hr>
 
-            <div class="article-metadata d-flex justify-content-between text-success">
-                <small>
-                    <i class='bx bx-current-location'></i> {{ post.location }}
-                </small>
-                <small>
-                    <i class='bx bxl-whatsapp'></i> {{ post.whatsapp }}
-                </small>
-                <small>
-                    <i class='bx bxs-phone-incoming'></i> {{ post.phone_number }}
-                </small>
-                <small>
-                    <i class='bx bxs-city'></i> {{ post.city }}
-                </small>
+                <hr>
+                <div class="article-metadata d-flex justify-content-between text-success p-3">
+                    <address>
+                        <i class='bx bx-current-location'></i> {{ post.location }}
+                    </address>
+                    <a>
+                        <i class='bx bxl-whatsapp'></i> {{ post.whatsapp }}
+                    </a>
+                    <a>
+                        <i class='bx bxs-phone-incoming'></i> {{ post.phone_number }}
+                    </a>
+                    <a>
+                        <i class='bx bxs-city'></i> {{ post.city }}
+                    </a>
+                </div>
+                <hr>
+                <h5> About House </h5>
+                <div class="description-wrapper text-success">
+                    <blockquote class="article-content">{{ post.description }}</blockquote>
+                </div>
+                <h5 class="mt-3"> Statistics </h5>
+                <div class="likes d-flex justify-content-start m-5 ">
+                    {% if current_user.has_liked_post(post) %}
+
+                    <a href="{{ url_for('like_action', post_id=post.id, action='unlike') }}"
+                       style="font-size:20px;"><i
+                            class='bx bx-dislike'></i>
+                    </a>
+                    <div class="m-2"></div>
+                    <a href="{{ url_for('like_action', post_id=post.id, action='like') }}"
+                       style="font-size:20px;"><i
+                            class='bx bxs-like'></i></a>
+                    <div class="m-2"></div>
+                    {{ post.likes.count() }} likes |
+                    <div class="m-2"></div>
+                    <a class="mr-2" style="font-size:20px;"><i class='bx bx-chat'></i> </a> {{ post.comments.count() }}
+                    comments
+
+                    {% else %}
+
+                    <a href="{{ url_for('like_action', post_id=post.id, action='like') }}"
+                       style="font-size:20px;"><i
+                            class='bx bxs-dislike'></i>
+                    </a>
+                    <div class="m-2"></div>
+                    <a href="{{ url_for('like_action', post_id=post.id, action='like') }}"
+                       style="font-size:20px;"><i class='bx bx-like'></i>
+                    </a>
+                    <div class="m-2"></div>
+                    {{ post.likes.count() }} likes |
+                    <div class="m-2"></div>
+                    <a class="mr-2" style="font-size:20px;"><i class='bx bx-chat'></i> </a>
+                    {{ post.comments.count() }} comments
+                    {% endif %}
+                </div>
+
+
             </div>
-            <br>
-            <h5> About House </h5>
-            <div class="description-wrapper text-success">
-                <blockquote class="article-content">{{ post.description }}</blockquote>
-            </div>
-        </div>
         </div>
         <div class="d-flex justify-content-center">
+
             <a href="{{ url_for('post', post_id=post.id)}}">
                 <button class="btn btno btn-outline-success mb-5">
                     VIEW
@@ -122,6 +163,7 @@
             </a>
         </div>
     </article>
+
     {% endfor %}
 </div>
 <div class="arrows d-flex justify-content-center text-success">
@@ -150,6 +192,17 @@
         loop : false,
         showCursor: false
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
