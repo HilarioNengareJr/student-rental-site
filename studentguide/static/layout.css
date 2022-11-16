@@ -92,7 +92,7 @@ img {
 .btn {
 	padding: 14px 18px;
 	border-width: 2px;
-	border-radius: 50px 25px;
+	border-radius: 50px 0px;
 }
 
 .logo {

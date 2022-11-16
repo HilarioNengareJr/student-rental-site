@@ -1,0 +1,75 @@
+{% extends "layout.html"%}
+
+{%block content%}
+<style>
+    #map {
+        width: 100%;
+        height: 400px;
+        background-color: grey;
+      }
+
+
+
+
+
+
+
+</style>
+
+<div class="mt-5 mb-5">
+    <div class="col-md-8 mx-auto text-center">
+        <h6 class="text-primary">MAP</h6>
+        <h1><span id="typed8"></span></h1>
+        <p class="text-success">
+            Find the address on the map.
+        </p>
+    </div>
+</div>
+
+<div class="m-5 d-flex justify-content-center">
+    <div id="map"></div>
+</div>
+
+<div class="mt-5 mb-5" style="text-align:center;">
+    <small>
+        Designed by <small class="text-primary">Hilario Nengare Jr.</small>
+    </small>
+</div>
+
+<script>
+      function initMap() {
+        var test= {lat: 35.2829, lng: 33.3753};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: test
+        });
+        var marker = new google.maps.Marker({
+          position: test,
+          map: map
+        });
+      }
+
+
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7aT6kjsEbZk_tap5vT_IrUYme1pehjyE&callback=initMap">
+</script>
+<script>
+//typed.js
+    new Typed('#typed8',{
+        strings : ['Locate the house.'],
+        typeSpeed : 50,
+        delaySpeed : 10,
+        loop : false,
+        showCursor: false
+});
+
+
+
+
+
+
+
+</script>
+{% endblock %}

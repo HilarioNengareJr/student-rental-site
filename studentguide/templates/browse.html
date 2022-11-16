@@ -41,13 +41,21 @@
 }
 
 
+
+
+
+
+
+
+
+
 </style>
 <div class="mt-5 mb-5">
     <div class="col-md-8 mx-auto text-center">
         <h6 class="text-primary">BROWSE</h6>
         <h1><span id="typed4"></span></h1>
         <p class="text-success">
-            You can scroll down or search above! Click on the posts to expand them, in order to get a perfect view.
+            Click on View to expand.
         </p>
     </div>
 </div>
@@ -68,47 +76,83 @@
                 </div>
                 <br>
                 <h5> House Images </h5>
-                <hr>
-                <div class="mt-3">
-                    <div class="carousel slide" data-bs-ride="carousel" id="carouselExampleControls">
-                        <div class="carousel-inner sizediv">
-                            {% for file_url in make_list(post.image_folder) %}
-                            <div class="carousel-item active text-center">
-                                <img alt="a picture" class="d-block w-100"
-                                     src="{{ url_for('static', filename='uploads/' + file_url) }}"
-                                     style="height:95%;">
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <button class="carousel-control-prev" data-bs-slide="prev"
-                                data-bs-target="#carouselExampleControls"
-                                type="button">
-                            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" data-bs-slide="next"
-                                data-bs-target="#carouselExampleControls"
-                                type="button">
-                            <span aria-hidden="true" class="carousel-control-next-icon"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
+                <div class="d-flex justify-content-end">
+                    <a>
+                        <svg class="bi bi-houses-fill" fill="currentColor" height="16" viewBox="0 0 16 16"
+                             width="16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.207 1a1 1 0 0 0-1.414 0L.146 6.646a.5.5 0 0 0 .708.708L1 7.207V12.5A1.5 1.5 0 0 0 2.5 14h.55a2.51 2.51 0 0 1-.05-.5V9.415a1.5 1.5 0 0 1-.56-2.475l5.353-5.354L7.207 1Z"/>
+                            <path d="M8.793 2a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708L8.793 2Z"/>
+                        </svg>
+                        in {{ post.city }}
+                    </a>
                 </div>
-
                 <hr>
-                <div class="article-metadata d-flex justify-content-between text-success p-3">
-                    <address>
-                        <i class='bx bx-current-location'></i> {{ post.location }}
-                    </address>
-                    <a>
-                        <i class='bx bxl-whatsapp'></i> {{ post.whatsapp }}
-                    </a>
-                    <a>
-                        <i class='bx bxs-phone-incoming'></i> {{ post.phone_number }}
-                    </a>
-                    <a>
-                        <i class='bx bxs-city'></i> {{ post.city }}
-                    </a>
+                <div class="carousel slide" data-bs-ride="carousel" id="carouselExampleControls">
+                    <div class="carousel-inner sizediv">
+                        {% for file_url in make_list(post.image_folder) %}
+                        <div class="carousel-item active text-center">
+                            <img alt="a picture" class="d-block w-100"
+                                 src="{{ url_for('static', filename='uploads/' + file_url) }}"
+                                 style="height:95%;">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" data-bs-slide="prev" data-bs-target="#carouselExampleControls"
+                            type="button">
+                        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#carouselExampleControls"
+                            type="button">
+                        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <hr>
+                <div class="article-metadata d-flex justify-content-between text-muted p-3">
+                    <small>
+                        <a href="{{ url_for('find') }}">
+                            <svg class="bi bi-geo-fill" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                 width="16" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"
+                                      fill-rule="evenodd"/>
+                            </svg>
+                            {{ post.location }}
+                        </a>
+                    </small>
+                    <small>
+                        <a href="https://wa.me/{{post.whatsapp}}">
+                            <svg height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" viewBox="0 0 24 24"
+                                 width="24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd"
+                                      d="M18.403 5.633A8.919 8.919 0 0 0 12.053 3c-4.948 0-8.976 4.027-8.978 8.977 0 1.582.413 3.126 1.198 4.488L3 21.116l4.759-1.249a8.981 8.981 0 0 0 4.29 1.093h.004c4.947 0 8.975-4.027 8.977-8.977a8.926 8.926 0 0 0-2.627-6.35m-6.35 13.812h-.003a7.446 7.446 0 0 1-3.798-1.041l-.272-.162-2.824.741.753-2.753-.177-.282a7.448 7.448 0 0 1-1.141-3.971c.002-4.114 3.349-7.461 7.465-7.461a7.413 7.413 0 0 1 5.275 2.188 7.42 7.42 0 0 1 2.183 5.279c-.002 4.114-3.349 7.462-7.461 7.462m4.093-5.589c-.225-.113-1.327-.655-1.533-.73-.205-.075-.354-.112-.504.112s-.58.729-.711.879-.262.168-.486.056-.947-.349-1.804-1.113c-.667-.595-1.117-1.329-1.248-1.554s-.014-.346.099-.458c.101-.1.224-.262.336-.393.112-.131.149-.224.224-.374s.038-.281-.019-.393c-.056-.113-.505-1.217-.692-1.666-.181-.435-.366-.377-.504-.383a9.65 9.65 0 0 0-.429-.008.826.826 0 0 0-.599.28c-.206.225-.785.767-.785 1.871s.804 2.171.916 2.321c.112.15 1.582 2.415 3.832 3.387.536.231.954.369 1.279.473.537.171 1.026.146 1.413.089.431-.064 1.327-.542 1.514-1.066.187-.524.187-.973.131-1.067-.056-.094-.207-.151-.43-.263"
+                                      fill-rule="evenodd"></path>
+                            </svg>
+                            {{ post.whatsapp }}
+                        </a>
+                    </small>
+                    <small>
+                        <a href="tel:{{post.phone_number}}">
+                            <svg class="bi bi-telephone-plus-fill" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                 width="16" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM12.5 1a.5.5 0 0 1 .5.5V3h1.5a.5.5 0 0 1 0 1H13v1.5a.5.5 0 0 1-1 0V4h-1.5a.5.5 0 0 1 0-1H12V1.5a.5.5 0 0 1 .5-.5z"
+                                      fill-rule="evenodd"/>
+                            </svg>
+                            {{ post.phone_number }}
+                        </a>
+                    </small>
+                    <small>
+                        <a href="https://mail.google.com/mail/?view=cm&source=mailto&to={{post.author.email}}">
+                            <svg class="bi bi-envelope-paper-heart-fill" fill="currentColor" height="16"
+                                 viewBox="0 0 16 16"
+                                 width="16" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m3 7.5 3.5 2L8 8.75l1.5.75 3.5-2v-6A1.5 1.5 0 0 0 11.5 0h-7A1.5 1.5 0 0 0 3 1.5v6ZM2 3.133l-.941.502A2 2 0 0 0 0 5.4v.313l2 1.173V3.133Zm12 3.753 2-1.173V5.4a2 2 0 0 0-1.059-1.765L14 3.133v3.753Zm-3.693 3.324L16 6.873v6.5l-5.693-3.163Zm5.634 4.274L8 10.072.059 14.484A2 2 0 0 0 2 16h12a2 2 0 0 0 1.941-1.516ZM5.693 10.21 0 13.372v-6.5l5.693 3.338ZM8 1.982C9.664.309 13.825 3.236 8 7 2.175 3.236 6.336.31 8 1.982Z"
+                                      fill-rule="evenodd"/>
+                            </svg>
+                            {{ post.author.email }}
+                        </a>
+                    </small>
                 </div>
                 <hr>
                 <h5> About House </h5>
@@ -117,6 +161,7 @@
                 </div>
                 <h5 class="mt-3"> Statistics </h5>
                 <div class="likes d-flex justify-content-start m-5 ">
+                    {% if current_user.is_uthenticated %}
                     {% if current_user.has_liked_post(post) %}
 
                     <a href="{{ url_for('like_action', post_id=post.id, action='unlike') }}"
@@ -149,6 +194,24 @@
                     <a class="mr-2" style="font-size:20px;"><i class='bx bx-chat'></i> </a>
                     {{ post.comments.count() }} comments
                     {% endif %}
+
+                    {% else %}
+
+                    <a href="{{ url_for('like_action', post_id=post.id, action='like') }}"
+                       style="font-size:20px;"><i
+                            class='bx bxs-dislike'></i>
+                    </a>
+                    <div class="m-2"></div>
+                    <a href="{{ url_for('like_action', post_id=post.id, action='like') }}"
+                       style="font-size:20px;"><i class='bx bx-like'></i>
+                    </a>
+                    <div class="m-2"></div>
+                    {{ post.likes.count() }} likes |
+                    <div class="m-2"></div>
+                    <a class="mr-2" style="font-size:20px;"><i class='bx bx-chat'></i> </a>
+                    {{ post.comments.count() }} comments
+
+                    {% endif %}
                 </div>
 
 
@@ -179,39 +242,19 @@
 </div>
 <div class="mt-5 mb-5" style="text-align:center;">
     <small>
-        Designed by <small class="text-primary">hilsCYBER inc.</small>
+        Designed by <small class="text-primary">Hilario Nengare Jr.</small>
     </small>
 </div>
 
 <script>
 //typed.js
     new Typed('#typed4',{
-        strings : ['Browse to find what you like.'],
+        strings : ['Browse for house.'],
         typeSpeed : 50,
         delaySpeed : 10,
         loop : false,
         showCursor: false
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>
 

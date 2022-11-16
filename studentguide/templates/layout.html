@@ -59,6 +59,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
           integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
           crossorigin="anonymous"/>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <link href="./style.css" rel="stylesheet" type="text/css"/>
+    <script src="./index.js" type="module"></script>
+
     {{ dropzone.load_css() }}
     {{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px;') }}
 
@@ -103,6 +108,9 @@
                 </li>
             </div>
             <li class="nav-item">
+                <a class="nav-link" href="{{url_for('account')}}">PROFILE</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{url_for('account')}}">ACCOUNT</a>
             </li>
         </ul>
@@ -136,6 +144,8 @@
 
 
 
+
+
 </style>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -158,6 +168,8 @@
 <script>
 // ScrollReveal is a JavaScript library for easily animating elements as they enter/leave the viewport.
 ScrollReveal().reveal('.scroll-review',{ delay: 250});
+
+
 
 
 

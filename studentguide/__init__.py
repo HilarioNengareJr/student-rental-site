@@ -34,7 +34,6 @@ mail = Mail(app)
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-
 def make_list(_var):
     return eval(_var)
 

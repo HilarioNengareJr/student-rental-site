@@ -1,7 +1,12 @@
 {% extends "layout.html"%}
 
 {%block content%}
-
-<h1>File Not Found</h1>
-<p><a href="{{ url_for('home') }}" style="font-size:25px;"><i class='bx bxs-left-arrow'></i></a></p>
+<div class="m-5">
+    <h5 class="d-flex justify-content-center ">Not Found</h5>
+    <div class="logincard d-flex justify-content-center  p-3">
+        <a href="{{ url_for('home') }}">
+            Get Back
+        </a>
+    </div>
+</div>
 {% endblock %}

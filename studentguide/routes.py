@@ -42,7 +42,11 @@ def too_large(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    page = request.args.get('page', 1, type=int)
+    search_term = request.args.get('search_term')
+    if search_term:
+        posts = Post.query.filter(Post.title.contains(search_term) | Post.content.contains(search_term))
+    else:
+        posts = Post.query.all()
     return render_template("home.html", title="Home Page")
 
 
@@ -205,6 +209,11 @@ def like_action(post_id, action):
         current_user.unlike_post(_post)
         db.session.commit()
     return redirect(request.referrer)
+
+
+@app.route('/find', methods=['GET', 'POST'])
+def find():
+    return render_template('find.html', title="Find House")
 
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
