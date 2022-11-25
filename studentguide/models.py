@@ -24,6 +24,9 @@ class User(UserMixin, db.Model):
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
     likes = db.relationship('Like', backref='author', lazy='dynamic')
 
+    def set_username(self, fname, lname):
+        self.username = fname + " " + lname
+
     def like_post(self, post):
         if not self.has_liked_post(post):
             like = Like(author_id=self.id, post_id=post.id)

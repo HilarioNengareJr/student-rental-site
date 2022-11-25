@@ -146,17 +146,16 @@
 
 
 
+
 </style>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
+{% with messages = get_flashed_messages() %}
 {% if messages %}
-{% for category, message in messages %}
-
-<div class="alert alert-{{ category }}">
-    {{ message }}
-</div>
-
-{% endfor %}
+<ul class=flashes>
+    {% for message in messages %}
+    <li> {{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
 {% endwith %}
 
@@ -168,6 +167,7 @@
 <script>
 // ScrollReveal is a JavaScript library for easily animating elements as they enter/leave the viewport.
 ScrollReveal().reveal('.scroll-review',{ delay: 250});
+
 
 
 

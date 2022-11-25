@@ -1,7 +1,13 @@
 {% extends 'layout.html'%}
 
 {% block content %}
-
+{% if error %}
+<div class="m-3">
+    <p class=error>
+        <strong>Error: </strong>{{ error }}
+    </p>
+</div>
+{% endif %}
 <style>
 .dropzone-card {
 	box-shadow:0 8px 22px rgba(0,0,0,0.2);
@@ -89,6 +95,7 @@ hr{
  height:200px;
 ]
 
+
 </style>
 
 <div class="containerl">
@@ -97,16 +104,17 @@ hr{
             <h6 class="text-primary">ADD POST</h6>
             <h1><span id="typed2"></span></h1>
             <p class="text-success">
-                Click inside the box to add photos or simply drag selected files you wish to upload.<br>Scroll to add rental details. Please comply with website rules, or you
+                Click inside the box to add photos or simply drag selected files you wish to upload.<br>Scroll to add
+                rental details. Please comply with website rules, or you
                 will
                 be banned!
             </p>
         </div>
     </div>
 
-<div class="d-flex justify-content-center">
-    {{ dropzone.create(action='upload_file') }}
-</div>
+    <div class="d-flex justify-content-center">
+        {{ dropzone.create(action='upload_file') }}
+    </div>
     <hr>
     <div class="outtacont">
         <div class="logincard">
@@ -127,7 +135,7 @@ hr{
                         {{ form.whatsapp(class="form-control form-control-lg text-success", id="tags") }}
                         {% endif %}
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         {{ form.phonenum.label(class="form-control-label") }}
                         {% if form.phonenum.errors %}
                         {{ form.phonenum(class="form-control form-control-lg is-invalid") }}
@@ -210,6 +218,7 @@ hr{
         loop : false,
         showCursor: false,
 });
+
 
 </script>
 {% endblock content %}

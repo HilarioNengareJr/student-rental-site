@@ -1,6 +1,13 @@
 {% extends 'layout.html'%}
 
 {% block content%}
+{% if error %}
+<div class="m-3">
+    <p class=error>
+        <strong>Error: </strong>{{ error }}
+    </p>
+</div>
+{% endif %}
 
 <style>
 body{
@@ -27,6 +34,7 @@ body{
 	background-color: rgba(21, 20, 51, 0.8);
 	z-index: -1;
 }
+
 
 </style>
 

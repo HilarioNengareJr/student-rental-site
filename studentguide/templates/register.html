@@ -62,6 +62,13 @@ form{
         </div>
     </div>
 </nav><!-- //NAVBAR -->
+{% if error %}
+<div class="m-3">
+    <p class=error>
+        <strong>Error: </strong>{{ error }}
+    </p>
+</div>
+{% endif %}
 
 <div class="outtacard py-5 subhero1">
     <div class="logincard mb-5 mt-5">
